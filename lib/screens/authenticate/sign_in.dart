@@ -83,8 +83,16 @@ class _SignInState extends State<SignIn> {
                     backgroundColor: WidgetStateProperty.all(Colors.pink.shade400)
                 ),
                   onPressed: () async {
-                    print('email');
-                    print('password');
+                    print(email);
+                    print(password);
+                    dynamic result = await _auth.signIn(email, password);
+                    if(result == null){
+                      print('error signing in');
+                    } else {
+                      print('signed in');
+                      print(result);
+                    }
+
                   },
                   child: Text(
                     'Sign in',
