@@ -1,4 +1,4 @@
-package com.ettlin.olivier.geotext.geotext
+package com.ettlin.olivier.geotext
 
 import io.flutter.embedding.android.FlutterActivity
 

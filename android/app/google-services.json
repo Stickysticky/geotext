@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "642113784872",
+    "project_id": "geotext-4f4cb",
+    "storage_bucket": "geotext-4f4cb.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:642113784872:android:451f663401a1e31eb8f91d",
+        "android_client_info": {
+          "package_name": "com.ettlin.olivier.geotext"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA-KJsh7Sq6lb3YQxEfVIXORxFSg3lJNEY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
