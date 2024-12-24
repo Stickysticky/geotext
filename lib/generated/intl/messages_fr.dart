@@ -25,12 +25,16 @@ class MessageLookup extends MessageLookupByLibrary {
         "enterEmail": MessageLookupByLibrary.simpleMessage("entrez un email"),
         "enterPassword": MessageLookupByLibrary.simpleMessage(
             "entrez un mot de passe de plus de 6 caractères"),
+        "errorTitle":
+            MessageLookupByLibrary.simpleMessage("une erreur a eu lieu"),
         "invalidEmail": MessageLookupByLibrary.simpleMessage(
             "veuillez entrer un email valide"),
         "register": MessageLookupByLibrary.simpleMessage("inscription"),
         "registerTitle":
             MessageLookupByLibrary.simpleMessage("s\'inscrire à Geotext"),
         "signIn": MessageLookupByLibrary.simpleMessage("connexion"),
+        "signInError": MessageLookupByLibrary.simpleMessage(
+            "une erreur a eu lieu lors de la connexion. Veuillez vérifier votre mail et votre mot de passe."),
         "signInTitle":
             MessageLookupByLibrary.simpleMessage("connexion à Geotext")
       };

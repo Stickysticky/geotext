@@ -85,14 +85,17 @@ class _SignInState extends State<SignIn> {
                     backgroundColor: WidgetStateProperty.all(Colors.pink.shade400)
                 ),
                   onPressed: () async {
-                    print(email);
-                    print(password);
                     dynamic result = await _auth.signIn(email, password);
                     if(result == null){
-                      print('error signing in');
-                    } else {
-                      print('signed in');
-                      print(result);
+                      showDialog(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return AlertDialog(
+                            title: Text(capitalizeFirstLetter(S.of(context).errorTitle)),
+                            content: Text(capitalizeFirstLetter(S.of(context).signInError)),
+                          );
+                        },
+                      );
                     }
 
                   },

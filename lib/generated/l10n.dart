@@ -119,6 +119,26 @@ class S {
       args: [],
     );
   }
+
+  /// `an error has occurred`
+  String get errorTitle {
+    return Intl.message(
+      'an error has occurred',
+      name: 'errorTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `an error occurred while connecting. Please check your email and password.`
+  String get signInError {
+    return Intl.message(
+      'an error occurred while connecting. Please check your email and password.',
+      name: 'signInError',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

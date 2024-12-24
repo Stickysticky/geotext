@@ -6,5 +6,7 @@
     "signIn": "connexion",
     "enterEmail": "entrez un email",
     "enterPassword": "entrez un mot de passe de plus de 6 caractères",
-    "invalidEmail": "veuillez entrer un email valide"
+    "invalidEmail": "veuillez entrer un email valide",
+    "errorTitle": "une erreur a eu lieu",
+    "signInError": "une erreur a eu lieu lors de la connexion. Veuillez vérifier votre mail et votre mot de passe."
 }
