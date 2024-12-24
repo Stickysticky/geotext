@@ -1,0 +1,10 @@
+{
+    "@@locale": "en",
+    "registerTitle": "register to Geotext",
+    "signInTitle": "sign in to Geotext",
+    "register": "register",
+    "signIn": "sign in",
+    "enterEmail": "enter an email",
+    "enterPassword": "enter a password 6+ char long",
+    "invalidEmail": "please enter a valid email"
+}

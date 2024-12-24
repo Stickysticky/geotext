@@ -39,6 +39,9 @@ dependencies:
   cloud_firestore: ^5.6.0
   firebase_core: ^3.9.0
   provider: ^6.1.2
+  flutter_localization: ^0.3.0
+  intl: any
+  intl_utils: ^2.8.7
 
 dev_dependencies:
   flutter_test:
@@ -61,6 +64,9 @@ flutter:
   # included with your application, so that you can use the icons in
   # the material Icons class.
   uses-material-design: true
+  generate: true
+  assets:
+    - lib/l10n/
 
   # To add assets to your application, add an assets section, like this:
   # assets:

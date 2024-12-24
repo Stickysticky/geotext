@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
+import '../../generated/l10n.dart';
 import '../../services/auth.dart';
+import 'package:geotext/services/utils.dart';
 
 class Register extends StatefulWidget {
 
@@ -26,7 +28,7 @@ class _RegisterState extends State<Register> {
         appBar: AppBar(
           backgroundColor: Colors.brown.shade400,
           elevation: 0.0,
-          title: Text('Sign up to Brew Crew'),
+          title: Text(capitalizeFirstLetter(S.of(context).registerTitle)),
           titleTextStyle: TextStyle(
               color: Colors.white,
               fontSize: 25
@@ -34,7 +36,7 @@ class _RegisterState extends State<Register> {
           actions: <Widget>[
             TextButton.icon(
               icon:Icon(Icons.person),
-              label:Text('Sign In'),
+              label:Text(capitalizeFirstLetter(S.of(context).signIn)),
               onPressed: () {
                 widget.toggleView();
               },
@@ -46,25 +48,13 @@ class _RegisterState extends State<Register> {
         ),
         body: Container(
           padding: EdgeInsets.symmetric(vertical: 20.0, horizontal: 50.0),
-          /*child: ElevatedButton(
-            onPressed: () async {
-              dynamic result = await _auth.signInAnon();
-              if(result == null){
-                print('error signing in');
-              } else {
-                print('signed in');
-                print(result);
-              }
-            },
-            child: Text('Sign in anon'),
-        ),*/
           child: Form(
               key: _formKey,
               child: Column(
                 children: <Widget>[
                   SizedBox(height: 20.0),
                   TextFormField(
-                    validator: (val) => (val == null || val.isEmpty) ? 'Enter an email' : null,
+                    validator: (val) => (val == null || val.isEmpty) ? capitalizeFirstLetter(S.of(context).enterEmail) : null,
                     onChanged: (val) {
                       setState(() => email = val);
                     },
@@ -72,7 +62,7 @@ class _RegisterState extends State<Register> {
                   SizedBox(height: 20.0),
                   TextFormField(
                     obscureText: true,
-                    validator: (val) => (val == null || val.length < 6) ? 'Enter a password 6+ char long' : null,
+                    validator: (val) => (val == null || val.length < 6) ? capitalizeFirstLetter(S.of(context).enterPassword) : null,
                     onChanged: (val) {
                       setState(() => password = val);
                     },
@@ -87,13 +77,13 @@ class _RegisterState extends State<Register> {
                           dynamic result = await _auth.registerWithEmailAndPassword(email, password);
                           if(result == null){
                             setState(() {
-                              error = 'please supply a valid email';
+                              error = capitalizeFirstLetter(S.of(context).invalidEmail);
                             });
                           }
                         }
                       },
                       child: Text(
-                        'Register',
+                        capitalizeFirstLetter(S.of(context).register),
                         style: TextStyle(color: Colors.white),
                       )
                   ),

@@ -1,0 +1,10 @@
+{
+    "@@locale": "fr",
+    "registerTitle": "s'inscrire à Geotext",
+    "signInTitle": "connexion à Geotext",
+    "register": "inscription",
+    "signIn": "connexion",
+    "enterEmail": "entrez un email",
+    "enterPassword": "entrez un mot de passe de plus de 6 caractères",
+    "invalidEmail": "veuillez entrer un email valide"
+}

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
+import '../../generated/l10n.dart';
 import '../../services/auth.dart';
+import 'package:geotext/services/utils.dart';
 
 class SignIn extends StatefulWidget {
 
@@ -27,11 +29,11 @@ class _SignInState extends State<SignIn> {
       appBar: AppBar(
         backgroundColor: Colors.brown.shade400,
         elevation: 0.0,
-        title: Text('Sign in to Brew Crew'),
+        title: Text(capitalizeFirstLetter(S.of(context).signInTitle)),
         actions: <Widget>[
           TextButton.icon(
             icon:Icon(Icons.person),
-            label:Text('Register'),
+            label:Text(capitalizeFirstLetter(S.of(context).register)),
             onPressed: () {
               widget.toggleView();
             },
@@ -65,7 +67,7 @@ class _SignInState extends State<SignIn> {
             children: <Widget>[
               SizedBox(height: 20.0),
               TextFormField(
-                validator: (val) => (val == null || val.isEmpty) ? 'Enter an email' : null,
+                validator: (val) => (val == null || val.isEmpty) ? capitalizeFirstLetter(S.of(context).enterEmail) : null,
                 onChanged: (val) {
                   setState(() => email = val);
                 },
@@ -95,7 +97,7 @@ class _SignInState extends State<SignIn> {
 
                   },
                   child: Text(
-                    'Sign in',
+                    capitalizeFirstLetter(S.of(context).signIn),
                     style: TextStyle(color: Colors.white),
                   )
               )
