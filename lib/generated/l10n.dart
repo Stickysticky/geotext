@@ -179,6 +179,46 @@ class S {
       args: [],
     );
   }
+
+  /// `geotext`
+  String get appTitle {
+    return Intl.message(
+      'geotext',
+      name: 'appTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `logout`
+  String get logout {
+    return Intl.message(
+      'logout',
+      name: 'logout',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `my account`
+  String get myAccount {
+    return Intl.message(
+      'my account',
+      name: 'myAccount',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `my maps`
+  String get myMaps {
+    return Intl.message(
+      'my maps',
+      name: 'myMaps',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

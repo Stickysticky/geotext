@@ -12,5 +12,9 @@
     "registerErrorMailUsed": "l'adresse mail est déjà utilisée",
     "unknownErrorRegister": "une erreur a eu lieu lors de l'inscription. Veuillez vérifier les informations et réessayer plus tard.",
     "registerWeakPassword": "votre mot de passe n'est pas assez sécurisé. Veuillez entrer un autre mot de passe.",
-    "registerInvalidEmail": "l'adresse mail n'est pas valide."
+    "registerInvalidEmail": "l'adresse mail n'est pas valide.",
+    "appTitle": "geotext",
+    "logout": "déconnexion",
+    "myAccount": "mon compte",
+    "myMaps": "mes cartes"
 }

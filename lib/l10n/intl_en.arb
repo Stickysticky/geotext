@@ -12,5 +12,9 @@
     "registerErrorMailUsed": "the email address is already in use",
     "unknownErrorRegister": "an error occured while registering. Please check your informations and try later",
     "registerWeakPassword": "your password is to weak. Please use a strong password.",
-    "registerInvalidEmail": "your email adress is invalid."
+    "registerInvalidEmail": "your email adress is invalid.",
+    "appTitle": "geotext",
+    "logout": "logout",
+    "myAccount": "my account",
+    "myMaps": "my maps"
 }

@@ -22,6 +22,7 @@ class MessageLookup extends MessageLookupByLibrary {
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
+        "appTitle": MessageLookupByLibrary.simpleMessage("geotext"),
         "enterEmail": MessageLookupByLibrary.simpleMessage("entrez un email"),
         "enterPassword": MessageLookupByLibrary.simpleMessage(
             "entrez un mot de passe de plus de 6 caractères"),
@@ -29,6 +30,9 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("une erreur a eu lieu"),
         "invalidEmail": MessageLookupByLibrary.simpleMessage(
             "veuillez entrer un email valide"),
+        "logout": MessageLookupByLibrary.simpleMessage("déconnexion"),
+        "myAccount": MessageLookupByLibrary.simpleMessage("mon compte"),
+        "myMaps": MessageLookupByLibrary.simpleMessage("mes cartes"),
         "register": MessageLookupByLibrary.simpleMessage("inscription"),
         "registerErrorMailUsed": MessageLookupByLibrary.simpleMessage(
             "l\'adresse mail est déjà utilisée"),
