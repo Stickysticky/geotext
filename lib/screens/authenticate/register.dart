@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 import '../../generated/l10n.dart';
@@ -75,10 +76,39 @@ class _RegisterState extends State<Register> {
                       onPressed: () async {
                         if(_formKey.currentState!.validate()){
                           dynamic result = await _auth.registerWithEmailAndPassword(email, password);
-                          if(result == null){
-                            setState(() {
-                              error = capitalizeFirstLetter(S.of(context).invalidEmail);
-                            });
+                          if (result is FirebaseAuthException) {
+                            switch (result.code) {
+                              case 'email-already-in-use':
+                                setState(() {
+                                  error = capitalizeFirstLetter(S
+                                      .of(context)
+                                      .registerErrorMailUsed);
+                                });
+                                break;
+
+                              case 'invalid-email':
+                                setState(() {
+                                  error = capitalizeFirstLetter(S
+                                      .of(context)
+                                      .invalidEmail);
+                                });
+                                break;
+
+                              case 'weak-password':
+                                setState(() {
+                                  error = capitalizeFirstLetter(S
+                                      .of(context)
+                                      .registerWeakPassword);
+                                });
+                                break;
+
+                              default:
+                                setState(() {
+                                  error = capitalizeFirstLetter(S
+                                      .of(context)
+                                      .unknownErrorRegister);
+                                });
+                            }
                           }
                         }
                       },

@@ -8,5 +8,9 @@
     "enterPassword": "entrez un mot de passe de plus de 6 caractères",
     "invalidEmail": "veuillez entrer un email valide",
     "errorTitle": "une erreur a eu lieu",
-    "signInError": "une erreur a eu lieu lors de la connexion. Veuillez vérifier votre mail et votre mot de passe."
+    "signInError": "une erreur a eu lieu lors de la connexion. Veuillez vérifier votre mail et votre mot de passe.",
+    "registerErrorMailUsed": "l'adresse mail est déjà utilisée",
+    "unknownErrorRegister": "une erreur a eu lieu lors de l'inscription. Veuillez vérifier les informations et réessayer plus tard.",
+    "registerWeakPassword": "votre mot de passe n'est pas assez sécurisé. Veuillez entrer un autre mot de passe.",
+    "registerInvalidEmail": "l'adresse mail n'est pas valide."
 }

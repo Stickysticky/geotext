@@ -139,6 +139,46 @@ class S {
       args: [],
     );
   }
+
+  /// `the email address is already in use`
+  String get registerErrorMailUsed {
+    return Intl.message(
+      'the email address is already in use',
+      name: 'registerErrorMailUsed',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `an error occured while registering. Please check your informations and try later`
+  String get unknownErrorRegister {
+    return Intl.message(
+      'an error occured while registering. Please check your informations and try later',
+      name: 'unknownErrorRegister',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `your password is to weak. Please use a strong password.`
+  String get registerWeakPassword {
+    return Intl.message(
+      'your password is to weak. Please use a strong password.',
+      name: 'registerWeakPassword',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `your email adress is invalid.`
+  String get registerInvalidEmail {
+    return Intl.message(
+      'your email adress is invalid.',
+      name: 'registerInvalidEmail',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

@@ -40,8 +40,7 @@ class AuthService {
       User? user = result.user;
       return _userFromFirebaseUser(user);
     }catch(e){
-      print(e.toString());
-      return null;
+      return e;
     }
   }
 
