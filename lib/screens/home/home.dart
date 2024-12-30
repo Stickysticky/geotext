@@ -44,8 +44,14 @@ class Home extends StatelessWidget {
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
        children: <Widget>[
-          MenuCard(text: capitalizeFirstLetter(S.of(context).myAccount), iconData: Icons.account_circle),
-         MenuCard(text: capitalizeFirstLetter(S.of(context).myMaps), iconData: Icons.map)
+          MenuCard(
+              text: capitalizeFirstLetter(S.of(context).myAccount),
+              iconData: Icons.account_circle
+          ),
+         MenuCard(
+             text: capitalizeFirstLetter(S.of(context).myMaps),
+             iconData: Icons.map
+         ),
        ],
       )
     );
