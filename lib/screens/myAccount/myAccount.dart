@@ -13,7 +13,8 @@ class MyAccount extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     User? user = FirebaseAuth.instance.currentUser;
-    print(Provider.of<CustomUser?>(context));
+    print(Provider.of<User?>(context));
+    print ('ici');
     print(user);
 
     return Scaffold(
@@ -23,6 +24,7 @@ class MyAccount extends StatelessWidget {
           title: Text(
             capitalizeFirstLetter(S.of(context).myAccount),
             style: TextStyle(
+              color: Colors.white,
                 fontSize: 27,
                 fontWeight: FontWeight.bold
             ),

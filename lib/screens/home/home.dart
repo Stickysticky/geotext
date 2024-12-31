@@ -17,6 +17,7 @@ class Home extends StatelessWidget {
         title: Text(
             capitalizeFirstLetter(S.of(context).appTitle),
           style: TextStyle(
+            color: Colors.white,
             fontSize: 27,
             fontWeight: FontWeight.bold
           ),
