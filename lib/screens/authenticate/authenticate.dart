@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:geotext/screens/authenticate/register.dart';
-import 'package:geotext/screens/authenticate/sign_in.dart';
+import 'package:geotext/screens/authenticate/signIn.dart';
 
 class Authenticate extends StatefulWidget {
   const Authenticate({super.key});

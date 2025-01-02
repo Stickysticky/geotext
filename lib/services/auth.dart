@@ -1,10 +1,12 @@
 
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:geotext/services/userService.dart';
 import '../models/customUser.dart';
 
 class AuthService {
 
   final FirebaseAuth _auth = FirebaseAuth.instance;
+  final UserService _userService = UserService();
 
   //TESTER ICI SI ON PEUX SE PASSER DE CustomUser
   CustomUser? _userFromFirebaseUser(User? user){
@@ -27,7 +29,14 @@ class AuthService {
           password: password
       );
       User? user = result.user;
-      return user;//_userFromFirebaseUser(user);
+      //return _userFromFirebaseUser(user);*/
+
+      if(user is User){
+        _userService.createUserDataConnexion(user);
+      }
+
+      return user;
+
     } catch(e){
       print (e.toString());
       return null;
@@ -43,8 +52,12 @@ class AuthService {
           email: email, password: password
       );
       User? user = result.user;
+
+      if(user is User){
+        _userService.updateUserDataConnexion(user);
+      }
+
       return user;
-      //return _userFromFirebaseUser(user);
     }catch(e){
       return e;
     }
