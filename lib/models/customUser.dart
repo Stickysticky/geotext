@@ -5,21 +5,27 @@ import 'package:uuid/uuid.dart';
 class CustomUser {
   final String _uid;
   String? _userName;
+  String? _userDisplayName;
   String _email;
-  final String _publicUid;
   final FieldValue _createdAt;
   FieldValue? _deletedAt = null;
 
   CustomUser(
-      this._uid, this._userName, this._email, this._publicUid, this._createdAt);
+      this._uid, this._userName, this._userDisplayName, this._email, this._createdAt);
 
   @override
   String toString() {
-    return 'CustomUser{_uid: $_uid, _userName: $_userName, _email: $_email, _publicUid: $_publicUid, _createdAt: $_createdAt, _deletedAt: $_deletedAt}';
+    return 'CustomUser{_uid: $_uid, _userName: $_userName, _userDisplayName: $_userDisplayName, _email: $_email, _createdAt: $_createdAt, _deletedAt: $_deletedAt}';
   }
 
   String get uid => _uid;
   String? get userName => _userName;
+
+  String? get userDisplayName => _userDisplayName;
+
+  set userDisplayName(String? value) {
+    _userDisplayName = value;
+  }
 
   set userName(String? value) {
     _userName = value;
@@ -35,8 +41,6 @@ class CustomUser {
     _email = value;
   }
 
-  String get publicUid => _publicUid;
-
   FieldValue get createdAt => _createdAt;
 
   FieldValue? get deletedAt => _deletedAt;
@@ -45,8 +49,8 @@ class CustomUser {
     return user != null ? CustomUser(
         user.uid,
       user.displayName,
+      user.displayName,
       user.email!,
-      const Uuid().v4(),
       FieldValue.serverTimestamp()
     ) : null;
   }
@@ -58,8 +62,8 @@ class CustomUser {
     try {
       await userRef.set({
         'user_name': userName,
+        'display_name': userDisplayName,
         'email': email,
-        'public_uuid': publicUid,
         'created_at': createdAt,
         'deleted_at': deletedAt
       });
