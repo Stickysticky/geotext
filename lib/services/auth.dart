@@ -1,26 +1,14 @@
 
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:geotext/services/userService.dart';
 import '../models/customUser.dart';
 
 class AuthService {
 
   final FirebaseAuth _auth = FirebaseAuth.instance;
-  final UserService _userService = UserService();
 
-  //TESTER ICI SI ON PEUX SE PASSER DE CustomUser
-  CustomUser? _userFromFirebaseUser(User? user){
-    return user != null ? CustomUser(uid: user.uid) : null;
+  Stream<CustomUser?> get user {
+    return _auth.authStateChanges().map(CustomUser.constructFromFirebaseUser);
   }
-
-  /*Stream<CustomUser?> get user {
-    return _auth.authStateChanges().map(_userFromFirebaseUser);
-  }*/
-
-  Stream<User?> get user {
-    return _auth.authStateChanges();
-  }
-
 
   Future signIn (String email, String password) async {
     try {
@@ -29,13 +17,9 @@ class AuthService {
           password: password
       );
       User? user = result.user;
-      //return _userFromFirebaseUser(user);*/
+      CustomUser? myUser = CustomUser.constructFromFirebaseUser(user);
 
-      if(user is User){
-        _userService.createUserDataConnexion(user);
-      }
-
-      return user;
+      return myUser;
 
     } catch(e){
       print (e.toString());
@@ -52,12 +36,13 @@ class AuthService {
           email: email, password: password
       );
       User? user = result.user;
+      CustomUser? myUser = CustomUser.constructFromFirebaseUser(user);
 
-      if(user is User){
-        _userService.updateUserDataConnexion(user);
-      }
+      //if(myUser is CustomUser){
+        myUser?.register();
+      //}
 
-      return user;
+      return myUser;
     }catch(e){
       return e;
     }

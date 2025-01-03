@@ -13,7 +13,7 @@ class MyAccount extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     User? user = FirebaseAuth.instance.currentUser;
-    print(Provider.of<User?>(context));
+    print(Provider.of<CustomUser?>(context));
     print ('ici');
     print(user);
 
