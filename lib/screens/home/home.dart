@@ -53,6 +53,14 @@ class Home extends StatelessWidget {
              text: capitalizeFirstLetter(S.of(context).myMaps),
              iconData: Icons.map
          ),
+         MenuCard(
+             text: capitalizeFirstLetter(S.of(context).myFriends),
+             iconData: Icons.people
+         ),
+         MenuCard(
+             text: capitalizeFirstLetter(S.of(context).notifications),
+             iconData: Icons.notifications
+         ),
        ],
       )
     );

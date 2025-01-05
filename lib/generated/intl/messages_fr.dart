@@ -34,7 +34,9 @@ class MessageLookup extends MessageLookupByLibrary {
             "veuillez entrer un email valide"),
         "logout": MessageLookupByLibrary.simpleMessage("déconnexion"),
         "myAccount": MessageLookupByLibrary.simpleMessage("mon compte"),
+        "myFriends": MessageLookupByLibrary.simpleMessage("mes amis"),
         "myMaps": MessageLookupByLibrary.simpleMessage("mes cartes"),
+        "notifications": MessageLookupByLibrary.simpleMessage("notifications"),
         "register": MessageLookupByLibrary.simpleMessage("inscription"),
         "registerErrorMailUsed": MessageLookupByLibrary.simpleMessage(
             "l\'adresse mail est déjà utilisée"),

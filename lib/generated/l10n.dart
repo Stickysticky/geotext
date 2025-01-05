@@ -269,6 +269,26 @@ class S {
       args: [],
     );
   }
+
+  /// `my friends`
+  String get myFriends {
+    return Intl.message(
+      'my friends',
+      name: 'myFriends',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `notifications`
+  String get notifications {
+    return Intl.message(
+      'notifications',
+      name: 'notifications',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

@@ -21,5 +21,7 @@
     "userDisplayName": "display name",
     "email": "email",
     "cancel": "cancel",
-    "save": "save"
+    "save": "save",
+    "myFriends": "my friends",
+    "notifications": "notifications"
 }

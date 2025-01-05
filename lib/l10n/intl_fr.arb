@@ -21,5 +21,7 @@
     "userDisplayName": "nom d'affichage",
     "email": "email",
     "cancel": "annuler",
-    "save": "sauvegarger"
+    "save": "sauvegarger",
+    "myFriends": "mes amis",
+    "notifications": "notifications"
 }
