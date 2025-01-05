@@ -16,5 +16,8 @@
     "appTitle": "geotext",
     "logout": "logout",
     "myAccount": "my account",
-    "myMaps": "my maps"
+    "myMaps": "my maps",
+    "userName": "nom d'utilisateur",
+    "userDisplayName": "nom d'affichage",
+    "email": "email"
 }

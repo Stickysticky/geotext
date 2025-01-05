@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import '../../models/customUser.dart';
 
 class AccountCard extends StatefulWidget {
-  bool _writeable = false;
+  bool _writeable;
   String _fieldName;
   dynamic _userValue;
 
@@ -17,26 +17,41 @@ class AccountCard extends StatefulWidget {
 class _AccountcardState extends State<AccountCard> {
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.fromLTRB(6, 6, 6, 6),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Text(
-            widget._fieldName,
-            style: TextStyle(fontSize: 20),
-          ),
-          Text(
-            widget._userValue,
-          ),
-          if (widget._writeable)
-            Icon(
-              Icons.chevron_right,
-              size: 20,
-              color: Colors.grey,
+    return InkWell(
+      onTap: () => {},
+      child: Padding(
+        padding: const EdgeInsets.fromLTRB(6, 6, 6, 6),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text(
+              widget._fieldName,
+              style: TextStyle(
+                  fontSize: 17,
+                fontWeight: FontWeight.bold
+              ),
             ),
-        ],
+            Spacer(),
+            Text(
+              widget._userValue,
+              textAlign: TextAlign.right,
+            ),
+            if (widget._writeable)
+              Icon(
+                Icons.chevron_right,
+                size: 20,
+                color: Colors.grey,
+              ),
+          ],
+        ),
       ),
     );
+  }
+
+  void showDialogModification(BuildContext context, String userValue) {
+    TextEditingController userValueController = TextEditingController(
+      text: userValue
+    );
+
   }
 }

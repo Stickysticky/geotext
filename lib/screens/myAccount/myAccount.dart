@@ -36,13 +36,19 @@ class MyAccount extends StatelessWidget {
             mainAxisSize: MainAxisSize.min,
           children: <Widget>[
             SizedBox(height: 10),
-            AccountCard('Email', user.email, true),
+            AccountCard(capitalizeFirstLetter(S.of(context).userName), user.userName, true),
             Divider(
               thickness: 1,
               indent: 16,
               endIndent: 16,
             ),
-            AccountCard('Nom d\'utilisateur', user.userName, true)
+            AccountCard(capitalizeFirstLetter(S.of(context).userDisplayName), user.userDisplayName, true),
+            Divider(
+              thickness: 1,
+              indent: 16,
+              endIndent: 16,
+            ),
+            AccountCard(capitalizeFirstLetter(S.of(context).email), user.email, true),
           ],
         ),
       ),

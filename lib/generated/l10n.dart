@@ -219,6 +219,36 @@ class S {
       args: [],
     );
   }
+
+  /// `nom d'utilisateur`
+  String get userName {
+    return Intl.message(
+      'nom d\'utilisateur',
+      name: 'userName',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `nom d'affichage`
+  String get userDisplayName {
+    return Intl.message(
+      'nom d\'affichage',
+      name: 'userDisplayName',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `email`
+  String get email {
+    return Intl.message(
+      'email',
+      name: 'email',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {
