@@ -23,6 +23,7 @@ class MessageLookup extends MessageLookupByLibrary {
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
         "appTitle": MessageLookupByLibrary.simpleMessage("geotext"),
+        "cancel": MessageLookupByLibrary.simpleMessage("cancel"),
         "email": MessageLookupByLibrary.simpleMessage("email"),
         "enterEmail": MessageLookupByLibrary.simpleMessage("enter an email"),
         "enterPassword": MessageLookupByLibrary.simpleMessage(
@@ -43,6 +44,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("register to Geotext"),
         "registerWeakPassword": MessageLookupByLibrary.simpleMessage(
             "your password is to weak. Please use a strong password."),
+        "save": MessageLookupByLibrary.simpleMessage("save"),
         "signIn": MessageLookupByLibrary.simpleMessage("sign in"),
         "signInError": MessageLookupByLibrary.simpleMessage(
             "an error occurred while connecting. Please check your email and password."),
@@ -50,8 +52,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("sign in to Geotext"),
         "unknownErrorRegister": MessageLookupByLibrary.simpleMessage(
             "an error occured while registering. Please check your informations and try later"),
-        "userDisplayName":
-            MessageLookupByLibrary.simpleMessage("nom d\'affichage"),
-        "userName": MessageLookupByLibrary.simpleMessage("nom d\'utilisateur")
+        "userDisplayName": MessageLookupByLibrary.simpleMessage("display name"),
+        "userName": MessageLookupByLibrary.simpleMessage("user name")
       };
 }

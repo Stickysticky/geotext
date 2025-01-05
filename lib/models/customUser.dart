@@ -1,6 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:uuid/uuid.dart';
 
 class CustomUser {
   final String _uid;
@@ -55,7 +54,7 @@ class CustomUser {
     ) : null;
   }
 
-  Future<void> register () async {
+  Future<void> save () async {
     final FirebaseFirestore _firestore = FirebaseFirestore.instance;
     final userRef = _firestore.collection('user').doc(uid);
 

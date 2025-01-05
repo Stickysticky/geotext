@@ -220,20 +220,20 @@ class S {
     );
   }
 
-  /// `nom d'utilisateur`
+  /// `user name`
   String get userName {
     return Intl.message(
-      'nom d\'utilisateur',
+      'user name',
       name: 'userName',
       desc: '',
       args: [],
     );
   }
 
-  /// `nom d'affichage`
+  /// `display name`
   String get userDisplayName {
     return Intl.message(
-      'nom d\'affichage',
+      'display name',
       name: 'userDisplayName',
       desc: '',
       args: [],
@@ -245,6 +245,26 @@ class S {
     return Intl.message(
       'email',
       name: 'email',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `cancel`
+  String get cancel {
+    return Intl.message(
+      'cancel',
+      name: 'cancel',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `save`
+  String get save {
+    return Intl.message(
+      'save',
+      name: 'save',
       desc: '',
       args: [],
     );

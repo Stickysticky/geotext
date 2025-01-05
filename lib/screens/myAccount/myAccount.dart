@@ -36,22 +36,55 @@ class MyAccount extends StatelessWidget {
             mainAxisSize: MainAxisSize.min,
           children: <Widget>[
             SizedBox(height: 10),
-            AccountCard(capitalizeFirstLetter(S.of(context).userName), user.userName, true),
+            AccountCard(
+                capitalizeFirstLetter(S.of(context).userName),
+                user.userName ?? '',
+                true,
+                user,
+                updateUserNameAndSave
+            ),
             Divider(
               thickness: 1,
               indent: 16,
               endIndent: 16,
             ),
-            AccountCard(capitalizeFirstLetter(S.of(context).userDisplayName), user.userDisplayName, true),
+            AccountCard(
+                capitalizeFirstLetter(S.of(context).userDisplayName),
+                user.userDisplayName ?? '',
+                true,
+                user,
+                updateDisplayNameAndSave
+            ),
             Divider(
               thickness: 1,
               indent: 16,
               endIndent: 16,
             ),
-            AccountCard(capitalizeFirstLetter(S.of(context).email), user.email, true),
+            AccountCard(
+                capitalizeFirstLetter(S.of(context).email),
+                user.email ?? '',
+                true,
+                user,
+                updateEmailAndSave
+            ),
           ],
         ),
       ),
     );
+  }
+
+  Future<void> updateEmailAndSave (CustomUser user, String email) async {
+    user.email = email;
+    user.save();
+  }
+
+  Future<void> updateUserNameAndSave (CustomUser user, String userName) async {
+    user.userName = userName;
+    user.save();
+  }
+
+  Future<void> updateDisplayNameAndSave (CustomUser user, String displayName) async {
+    user.userDisplayName = displayName;
+    user.save();
   }
 }

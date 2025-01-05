@@ -39,7 +39,7 @@ class AuthService {
       CustomUser? myUser = CustomUser.constructFromFirebaseUser(user);
 
       //if(myUser is CustomUser){
-        myUser?.register();
+        myUser?.save();
       //}
 
       return myUser;

@@ -19,5 +19,7 @@
     "myMaps": "mes cartes",
     "userName": "nom d'utilisateur",
     "userDisplayName": "nom d'affichage",
-    "email": "email"
+    "email": "email",
+    "cancel": "annuler",
+    "save": "sauvegarger"
 }

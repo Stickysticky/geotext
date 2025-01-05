@@ -17,7 +17,9 @@
     "logout": "logout",
     "myAccount": "my account",
     "myMaps": "my maps",
-    "userName": "nom d'utilisateur",
-    "userDisplayName": "nom d'affichage",
-    "email": "email"
+    "userName": "user name",
+    "userDisplayName": "display name",
+    "email": "email",
+    "cancel": "cancel",
+    "save": "save"
 }
