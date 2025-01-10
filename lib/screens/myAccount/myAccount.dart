@@ -1,19 +1,17 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:geotext/providers/connectedUserProvider.dart';
 import 'package:geotext/screens/myAccount/accountCard.dart';
-import 'package:provider/provider.dart';
-
 import '../../generated/l10n.dart';
 import '../../models/customUser.dart';
-import '../../services/auth.dart';
 import '../../services/utils.dart';
 
-class MyAccount extends StatelessWidget {
+class MyAccount extends ConsumerWidget {
   MyAccount({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    CustomUser user = Provider.of<CustomUser>(context);
+  Widget build(BuildContext context, WidgetRef ref) {
+    CustomUser user = ref.watch(connectedUserNotifierProvider) as CustomUser;
 
     return Scaffold(
       backgroundColor: Colors.brown.shade50,
@@ -41,6 +39,7 @@ class MyAccount extends StatelessWidget {
                 user.userName ?? '',
                 true,
                 user,
+                ref,
                 updateUserNameAndSave
             ),
             Divider(
@@ -53,6 +52,7 @@ class MyAccount extends StatelessWidget {
                 user.userDisplayName ?? '',
                 true,
                 user,
+                ref,
                 updateDisplayNameAndSave
             ),
             Divider(
@@ -65,6 +65,7 @@ class MyAccount extends StatelessWidget {
                 user.email ?? '',
                 true,
                 user,
+                ref,
                 updateEmailAndSave
             ),
           ],
@@ -73,17 +74,20 @@ class MyAccount extends StatelessWidget {
     );
   }
 
-  Future<void> updateEmailAndSave (CustomUser user, String email) async {
+  Future<void> updateEmailAndSave (WidgetRef ref, CustomUser user, String email) async {
+    ref.read(connectedUserNotifierProvider.notifier).updateEmail(email);
     user.email = email;
     user.save();
   }
 
-  Future<void> updateUserNameAndSave (CustomUser user, String userName) async {
+  Future<void> updateUserNameAndSave (WidgetRef ref,CustomUser user, String userName) async {
+    ref.read(connectedUserNotifierProvider.notifier).updateUserName(userName);
     user.userName = userName;
     user.save();
   }
 
-  Future<void> updateDisplayNameAndSave (CustomUser user, String displayName) async {
+  Future<void> updateDisplayNameAndSave (WidgetRef ref,CustomUser user, String displayName) async {
+    ref.read(connectedUserNotifierProvider.notifier).updateDisplayName(displayName);
     user.userDisplayName = displayName;
     user.save();
   }

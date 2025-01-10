@@ -1,16 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:geotext/screens/home/menuCard.dart';
 import '../../generated/l10n.dart';
+import '../../providers/authServiceProvider.dart';
 import '../../services/auth.dart';
 import '../../services/utils.dart';
 
-class Home extends StatelessWidget {
+class Home extends ConsumerWidget {
   Home({super.key});
 
-  final AuthService _auth = AuthService();
-
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final AuthService _auth = ref.read(authServiceProvider);
+
     return Scaffold(
       backgroundColor: Colors.brown.shade50,
       appBar: AppBar(

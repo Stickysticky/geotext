@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../generated/l10n.dart';
 import '../../models/customUser.dart';
@@ -9,11 +10,12 @@ class AccountCard extends StatefulWidget {
   String _fieldName;
   dynamic _userValue;
   CustomUser _user;
-  final Future<void> Function(CustomUser, String) _update;
+  WidgetRef _ref;
+  final Future<void> Function(WidgetRef ref, CustomUser, String) _update;
 
 
   AccountCard(this._fieldName, this._userValue, this._writeable, this._user,
-      this._update);
+      this._ref, this._update);
 
   @override
   State<AccountCard> createState() => _AccountcardState();
@@ -84,7 +86,7 @@ class _AccountcardState extends State<AccountCard> {
               onPressed: () {
                 setState(() {
                   widget._userValue = userValueController.text;
-                  widget._update(widget._user, userValueController.text);
+                  widget._update(widget._ref, widget._user, userValueController.text);
                 });
                 Navigator.of(dialogContext).pop();
               },

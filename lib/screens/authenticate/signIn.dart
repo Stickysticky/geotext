@@ -1,21 +1,23 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../generated/l10n.dart';
+import '../../providers/authServiceProvider.dart';
 import '../../services/auth.dart';
 import 'package:geotext/services/utils.dart';
 
-class SignIn extends StatefulWidget {
+class SignIn extends ConsumerStatefulWidget {
 
   final Function toggleView;
   SignIn({required this.toggleView});
 
   @override
-  State<SignIn> createState() => _SignInState();
+  ConsumerState<SignIn> createState() => _SignInState();
 }
 
-class _SignInState extends State<SignIn> {
+class _SignInState extends ConsumerState<SignIn> {
 
-  final AuthService _auth = AuthService();
+
   final _formKey = GlobalKey<FormState>();
 
   String email = '';
@@ -24,6 +26,7 @@ class _SignInState extends State<SignIn> {
 
   @override
   Widget build(BuildContext context) {
+    final AuthService auth = ref.read(authServiceProvider);
     return Scaffold(
       backgroundColor: Colors.brown.shade100,
       appBar: AppBar(
@@ -85,7 +88,7 @@ class _SignInState extends State<SignIn> {
                     backgroundColor: WidgetStateProperty.all(Colors.pink.shade400)
                 ),
                   onPressed: () async {
-                    dynamic result = await _auth.signIn(email, password);
+                    dynamic result = await auth.signIn(email, password);
                     if(result == null){
                       showDialog(
                         context: context,

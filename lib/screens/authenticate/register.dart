@@ -1,21 +1,22 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../generated/l10n.dart';
+import '../../providers/authServiceProvider.dart';
 import '../../services/auth.dart';
 import 'package:geotext/services/utils.dart';
 
-class Register extends StatefulWidget {
+class Register extends ConsumerStatefulWidget {
 
   final Function toggleView;
   Register({required this.toggleView});
 
   @override
-  State<Register> createState() => _RegisterState();
+  ConsumerState<Register> createState() => _RegisterState();
 }
 
-class _RegisterState extends State<Register> {
-  final AuthService _auth = AuthService();
+class _RegisterState extends ConsumerState<Register> {
   final _formKey = GlobalKey<FormState>();
 
   String email = '';
@@ -24,6 +25,8 @@ class _RegisterState extends State<Register> {
 
   @override
   Widget build(BuildContext context) {
+    final AuthService auth = ref.read(authServiceProvider);
+
     return Scaffold(
         backgroundColor: Colors.brown.shade100,
         appBar: AppBar(
@@ -75,7 +78,7 @@ class _RegisterState extends State<Register> {
                       ),
                       onPressed: () async {
                         if(_formKey.currentState!.validate()){
-                          dynamic result = await _auth.registerWithEmailAndPassword(email, password);
+                          dynamic result = await auth.registerWithEmailAndPassword(email, password);
                           if (result is FirebaseAuthException) {
                             switch (result.code) {
                               case 'email-already-in-use':

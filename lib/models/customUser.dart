@@ -6,8 +6,8 @@ class CustomUser {
   String? _userName;
   String? _userDisplayName;
   String _email;
-  final FieldValue _createdAt;
-  FieldValue? _deletedAt = null;
+  final Timestamp _createdAt;
+  Timestamp? _deletedAt = null;
 
   CustomUser(
       this._uid, this._userName, this._userDisplayName, this._email, this._createdAt);
@@ -30,7 +30,7 @@ class CustomUser {
     _userName = value;
   }
 
-  set deletedAt(FieldValue? value) {
+  set deletedAt(Timestamp? value) {
     _deletedAt = value;
   }
 
@@ -40,9 +40,11 @@ class CustomUser {
     _email = value;
   }
 
-  FieldValue get createdAt => _createdAt;
+  Timestamp get createdAt => _createdAt;
 
-  FieldValue? get deletedAt => _deletedAt;
+  Timestamp? get deletedAt => _deletedAt;
+
+  set displayName(String? displayName) {}
 
   static CustomUser? constructFromFirebaseUser(User? user){
     return user != null ? CustomUser(
@@ -50,13 +52,58 @@ class CustomUser {
       user.displayName,
       user.displayName,
       user.email!,
-      FieldValue.serverTimestamp()
+        Timestamp.now()
     ) : null;
   }
 
+  static CustomUser? constructFromFireStoreUser(User? user){
+    return user != null ? CustomUser(
+        user.uid,
+        user.displayName,
+        user.displayName,
+        user.email!,
+        Timestamp.now()
+    ) : null;
+  }
+
+  static Future<CustomUser?> getFromFirestore(String uuid) async {
+    final FirebaseFirestore firestore = FirebaseFirestore.instance;
+    final userRef = firestore.collection('user').doc(uuid);
+
+    try {
+      // Récupération du document Firestore
+      final doc = await userRef.get();
+
+      if (!doc.exists) {
+        print('Utilisateur avec l’ID $uuid non trouvé.');
+        return null;
+      }
+
+      // Extraction des données du document
+      final data = doc.data();
+      if (data == null) {
+        print('Aucune donnée disponible pour l’utilisateur $uuid.');
+        return null;
+      }
+
+      // Création de l’objet CustomUser à partir des données Firestore
+      return CustomUser(
+        uuid,
+        data['user_name'] as String?,
+        data['display_name'] as String?,
+        data['email'] as String,
+        data['created_at'] as Timestamp,
+      )..deletedAt = data['deleted_at'] as Timestamp?;
+    } catch (e) {
+      print('Erreur lors de la récupération de l’utilisateur : $e');
+      return null;
+    }
+  }
+
+
   Future<void> save () async {
-    final FirebaseFirestore _firestore = FirebaseFirestore.instance;
-    final userRef = _firestore.collection('user').doc(uid);
+    final FirebaseFirestore firestore = FirebaseFirestore.instance;
+    final userRef = firestore.collection('user').doc(uid);
 
     try {
       await userRef.set({
