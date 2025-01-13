@@ -4,14 +4,15 @@ class MenuCard extends StatelessWidget {
 
   final String text;
   final IconData iconData;
+  final String route;
 
-  MenuCard({required this.text, required this.iconData});
+  MenuCard({required this.text, required this.iconData, required this.route});
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        Navigator.pushNamed(context, '/my_account');
+        Navigator.pushNamed(context, route);
       },
       child: Card(
         margin: EdgeInsets.fromLTRB(16.0, 26.0, 16.0, 0),

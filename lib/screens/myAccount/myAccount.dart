@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:geotext/commonWidgets/customAppBar.dart';
 import 'package:geotext/providers/connectedUserProvider.dart';
 import 'package:geotext/screens/myAccount/accountCard.dart';
 import '../../generated/l10n.dart';
@@ -15,19 +16,7 @@ class MyAccount extends ConsumerWidget {
 
     return Scaffold(
       backgroundColor: Colors.brown.shade50,
-      appBar: AppBar(
-        centerTitle: true,
-          title: Text(
-            capitalizeFirstLetter(S.of(context).myAccount),
-            style: TextStyle(
-              color: Colors.white,
-                fontSize: 27,
-                fontWeight: FontWeight.bold
-            ),
-          ),
-          backgroundColor: Colors.brown.shade400,
-          elevation: 0.0,
-      ),
+      appBar: CustomAppBar(S.of(context).myAccount),
       body: Card(
         margin: EdgeInsets.fromLTRB(6.0, 16.0, 6.0, 0),
         child: Column(

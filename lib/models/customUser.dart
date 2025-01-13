@@ -1,8 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
+import 'geoMap.dart';
+
 class CustomUser {
-  final String _uid;
+  final String _id;
   String? _userName;
   String? _userDisplayName;
   String _email;
@@ -10,14 +12,14 @@ class CustomUser {
   Timestamp? _deletedAt = null;
 
   CustomUser(
-      this._uid, this._userName, this._userDisplayName, this._email, this._createdAt);
+      this._id, this._userName, this._userDisplayName, this._email, this._createdAt);
 
   @override
   String toString() {
-    return 'CustomUser{_uid: $_uid, _userName: $_userName, _userDisplayName: $_userDisplayName, _email: $_email, _createdAt: $_createdAt, _deletedAt: $_deletedAt}';
+    return 'CustomUser{_id: $_id, _userName: $_userName, _userDisplayName: $_userDisplayName, _email: $_email, _createdAt: $_createdAt, _deletedAt: $_deletedAt}';
   }
 
-  String get uid => _uid;
+  String get id => _id;
   String? get userName => _userName;
 
   String? get userDisplayName => _userDisplayName;
@@ -103,7 +105,7 @@ class CustomUser {
 
   Future<void> save () async {
     final FirebaseFirestore firestore = FirebaseFirestore.instance;
-    final userRef = firestore.collection('user').doc(uid);
+    final userRef = firestore.collection('user').doc(id);
 
     try {
       await userRef.set({
@@ -118,4 +120,47 @@ class CustomUser {
       print('Erreur lors de la création de l’utilisateur : $e');
     }
   }
+
+  // Méthode pour récupérer toutes les cartes associées à un CustomUser (cartes où l'utilisateur est propriétaire ou partagé)
+  static Future<List<GeoMap>> getMyMaps(CustomUser user) async {
+    final FirebaseFirestore firestore = FirebaseFirestore.instance;
+
+    // Récupérer les cartes dont l'utilisateur est propriétaire
+    final ownerMapsSnapshot = await firestore
+        .collection('geoMaps')
+        .where('ownerId', isEqualTo: user.id)
+        .get();
+
+    // Créer une liste de GeoMap à partir des résultats
+    List<GeoMap> maps = [];
+
+    // Ajouter les cartes où l'utilisateur est propriétaire
+    for (var map in ownerMapsSnapshot.docs) {
+      maps.add(await GeoMap.getGeoMapById(map.id));
+    }
+
+    return maps;
+  }
+
+  // Méthode pour récupérer toutes les cartes partagées avec un CustomUser
+  static Future<List<GeoMap>> getSharedMaps(CustomUser user) async {
+    final FirebaseFirestore firestore = FirebaseFirestore.instance;
+
+    // Récupérer les cartes partagées avec l'utilisateur
+    final sharedMapsSnapshot = await firestore
+        .collection('geoMaps')
+        .where('sharedWith', arrayContains: user.id)
+        .get();
+
+    // Créer une liste de GeoMap à partir des résultats
+    List<GeoMap> maps = [];
+
+    // Ajouter les cartes où l'utilisateur est dans la liste des partagés
+    for (var map in sharedMapsSnapshot.docs) {
+      maps.add(await GeoMap.getGeoMapById(map.id));
+    }
+
+    return maps;
+  }
+
 }

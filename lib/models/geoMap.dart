@@ -1,0 +1,109 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:geotext/models/customUser.dart';
+import 'package:uuid/uuid.dart';
+
+class GeoMap {
+  String _id;
+  String _title;
+  CustomUser _owner;
+  bool _isPrivate;
+  List<CustomUser> _sharedWith;
+
+  GeoMap({
+    String? id,
+    required String title,
+    required CustomUser owner,
+    bool isPrivate = true,
+    List<CustomUser>? sharedWith,
+  })  : _id = id ?? const Uuid().v4(),
+        _title = title,
+        _owner = owner,
+        _isPrivate = isPrivate,
+        _sharedWith = sharedWith ?? [];
+
+  String get id => _id;
+
+  set id(String value) {
+    _id = value;
+  }
+
+  String get title => _title;
+  CustomUser get owner => _owner;
+  bool get isPrivate => _isPrivate;
+  List<CustomUser> get sharedWith => _sharedWith;
+
+  set title(String value) => _title = value;
+  set owner(CustomUser value) => _owner = value;
+  set isPrivate(bool value) => _isPrivate = value;
+  set sharedWith(List<CustomUser> value) => _sharedWith = value;
+
+  void addSharedUser(CustomUser user) {
+    if (!_sharedWith.contains(user)) {
+      _sharedWith.add(user);
+    }
+  }
+
+  void removeSharedUser(CustomUser user) {
+    _sharedWith.remove(user);
+  }
+
+  @override
+  String toString() {
+    return 'Map(title: $_title, owner: ${_owner.id}, isPrivate: $_isPrivate, sharedWith: ${_sharedWith.map((u) => u.id).toList()})';
+  }
+
+  // Méthode pour récupérer une GeoMap depuis Firestore avec un mapId
+  static Future<GeoMap> getGeoMapById(String mapId) async {
+    final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+
+    // Récupère le document de la GeoMap par son ID
+    final docSnapshot = await _firestore.collection('geoMaps').doc(mapId).get();
+
+    if (!docSnapshot.exists) {
+      throw Exception('GeoMap not found');
+    }
+
+    final data = docSnapshot.data()!;  // Récupère les données du document Firestore
+
+    // Récupère l'owner de la GeoMap à partir de Firestore
+    final ownerId = data['ownerId']; // Récupère l'ID du propriétaire depuis le document Firestore
+    final ownerDoc = await _firestore.collection('user').doc(ownerId).get();
+    final ownerData = ownerDoc.data()!;
+
+    // Crée un CustomUser pour l'owner avec les informations récupérées
+    CustomUser owner = CustomUser(
+      ownerId,
+      ownerData['userName'],
+      ownerData['userDisplayName'],
+      ownerData['email'],
+      ownerData['createdAt'],
+    );
+
+    // Récupère la liste des utilisateurs partagés (sharedWith) à partir de Firestore
+    final List<CustomUser> sharedWith = await Future.wait(
+      (data['sharedWith'] as List<dynamic>? ?? []).map((userId) async {
+        // Récupère les informations complètes de l'utilisateur à partir de Firestore
+        final userDoc = await _firestore.collection('users').doc(userId).get();
+        final userData = userDoc.data()!;
+
+        // Crée et retourne un CustomUser avec les données de Firestore
+        return CustomUser(
+          userId,
+          userData['userName'],
+          userData['userDisplayName'],
+          userData['email'],
+          userData['createdAt'],
+        );
+      }).toList(),
+    );
+
+    // Crée et retourne un objet GeoMap avec les données récupérées
+    return GeoMap(
+      id: docSnapshot.id,  // Utilise l'ID du document Firestore comme ID de la carte
+      title: data['title'] ?? '',  // Titre de la carte
+      owner: owner,  // Le propriétaire, récupéré depuis Firestore
+      isPrivate: data['isPrivate'] ?? true,  // La visibilité (privée ou publique)
+      sharedWith: sharedWith,  // Les utilisateurs avec qui la carte est partagée
+    );
+  }
+}

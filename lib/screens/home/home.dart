@@ -49,19 +49,23 @@ class Home extends ConsumerWidget {
        children: <Widget>[
           MenuCard(
               text: capitalizeFirstLetter(S.of(context).myAccount),
-              iconData: Icons.account_circle
+              iconData: Icons.account_circle,
+              route: '/my_account'
           ),
          MenuCard(
              text: capitalizeFirstLetter(S.of(context).myMaps),
-             iconData: Icons.map
+             iconData: Icons.map,
+             route: '/my_maps'
          ),
          MenuCard(
              text: capitalizeFirstLetter(S.of(context).myFriends),
-             iconData: Icons.people
+             iconData: Icons.people,
+             route: '/my_maps'
          ),
          MenuCard(
              text: capitalizeFirstLetter(S.of(context).notifications),
-             iconData: Icons.notifications
+             iconData: Icons.notifications,
+             route: '/my_maps'
          ),
        ],
       )
