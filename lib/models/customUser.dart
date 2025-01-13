@@ -10,6 +10,7 @@ class CustomUser {
   String _email;
   final Timestamp _createdAt;
   Timestamp? _deletedAt = null;
+  List<GeoMap> _geoMaps = [];
 
   CustomUser(
       this._id, this._userName, this._userDisplayName, this._email, this._createdAt);
@@ -47,6 +48,12 @@ class CustomUser {
   Timestamp? get deletedAt => _deletedAt;
 
   set displayName(String? displayName) {}
+
+  List<GeoMap> get geoMaps => _geoMaps;
+
+  set geoMaps(List<GeoMap> value) {
+    _geoMaps = value;
+  }
 
   static CustomUser? constructFromFirebaseUser(User? user){
     return user != null ? CustomUser(

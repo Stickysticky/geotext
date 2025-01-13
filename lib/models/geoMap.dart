@@ -106,4 +106,28 @@ class GeoMap {
       sharedWith: sharedWith,  // Les utilisateurs avec qui la carte est partagée
     );
   }
+
+  // Méthode pour sauvegarder une GeoMap sur Firestore
+  Future<void> saveToFirestore() async {
+    final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+
+    // Préparer les données à sauvegarder
+    final data = {
+      'title': _title,
+      'ownerId': _owner.id,  // ID de l'owner
+      'isPrivate': _isPrivate,
+      'sharedWith': _sharedWith.map((user) => user.id).toList(),  // Liste des IDs des utilisateurs partagés
+    };
+
+    // Si la GeoMap a un ID existant, on met à jour le document Firestore existant
+    if (_id.isNotEmpty) {
+      await _firestore.collection('geoMaps').doc(_id).set(data);
+    } else {
+      // Sinon, on crée un nouveau document avec un ID généré
+      final newDocRef = _firestore.collection('geoMaps').doc();
+      await newDocRef.set(data);
+      // Met à jour l'ID local après avoir sauvegardé
+      _id = newDocRef.id;
+    }
+  }
 }
