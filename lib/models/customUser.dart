@@ -10,7 +10,8 @@ class CustomUser {
   String _email;
   final Timestamp _createdAt;
   Timestamp? _deletedAt = null;
-  List<GeoMap> _geoMaps = [];
+  List<GeoMap> _geoMapsShared = [];
+  List<GeoMap> _geoMapsOwner = [];
 
   CustomUser(
       this._id, this._userName, this._userDisplayName, this._email, this._createdAt);
@@ -49,10 +50,16 @@ class CustomUser {
 
   set displayName(String? displayName) {}
 
-  List<GeoMap> get geoMaps => _geoMaps;
+  List<GeoMap> get geoMapsShared => _geoMapsShared;
 
-  set geoMaps(List<GeoMap> value) {
-    _geoMaps = value;
+  set geoMapsShared(List<GeoMap> value) {
+    _geoMapsShared = value;
+  }
+
+  List<GeoMap> get geoMapsOwner => _geoMapsOwner;
+
+  set geoMapsOwner(List<GeoMap> value) {
+    _geoMapsOwner = value;
   }
 
   static CustomUser? constructFromFirebaseUser(User? user){
@@ -127,47 +134,4 @@ class CustomUser {
       print('Erreur lors de la création de l’utilisateur : $e');
     }
   }
-
-  // Méthode pour récupérer toutes les cartes associées à un CustomUser (cartes où l'utilisateur est propriétaire ou partagé)
-  static Future<List<GeoMap>> getMyMaps(CustomUser user) async {
-    final FirebaseFirestore firestore = FirebaseFirestore.instance;
-
-    // Récupérer les cartes dont l'utilisateur est propriétaire
-    final ownerMapsSnapshot = await firestore
-        .collection('geoMaps')
-        .where('ownerId', isEqualTo: user.id)
-        .get();
-
-    // Créer une liste de GeoMap à partir des résultats
-    List<GeoMap> maps = [];
-
-    // Ajouter les cartes où l'utilisateur est propriétaire
-    for (var map in ownerMapsSnapshot.docs) {
-      maps.add(await GeoMap.getGeoMapById(map.id));
-    }
-
-    return maps;
-  }
-
-  // Méthode pour récupérer toutes les cartes partagées avec un CustomUser
-  static Future<List<GeoMap>> getSharedMaps(CustomUser user) async {
-    final FirebaseFirestore firestore = FirebaseFirestore.instance;
-
-    // Récupérer les cartes partagées avec l'utilisateur
-    final sharedMapsSnapshot = await firestore
-        .collection('geoMaps')
-        .where('sharedWith', arrayContains: user.id)
-        .get();
-
-    // Créer une liste de GeoMap à partir des résultats
-    List<GeoMap> maps = [];
-
-    // Ajouter les cartes où l'utilisateur est dans la liste des partagés
-    for (var map in sharedMapsSnapshot.docs) {
-      maps.add(await GeoMap.getGeoMapById(map.id));
-    }
-
-    return maps;
-  }
-
 }

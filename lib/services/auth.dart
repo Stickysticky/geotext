@@ -1,5 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart'; // Importez Riverpod
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:geotext/models/geoMap.dart';
 import '../models/customUser.dart';
 import 'package:geotext/providers/connectedUserProvider.dart'; // Importez votre notifier
 
@@ -23,7 +24,12 @@ class AuthService {
       User? user = result.user;
 
       if(user is User){
-        CustomUser? myUser = await CustomUser.getFromFirestore(user!.uid);
+        CustomUser? myUser = await CustomUser.getFromFirestore(user.uid);
+
+        if(myUser is User){
+          myUser!.geoMapsOwner = await GeoMap.getMyMaps(myUser);
+          myUser.geoMapsShared = await GeoMap.getSharedMaps(myUser);
+        }
         ref.read(connectedUserNotifierProvider.notifier).setUser(myUser);
 
         return myUser;

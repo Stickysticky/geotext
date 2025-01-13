@@ -130,4 +130,46 @@ class GeoMap {
       _id = newDocRef.id;
     }
   }
+
+  // Méthode pour récupérer toutes les cartes associées à un CustomUser (cartes où l'utilisateur est propriétaire ou partagé)
+  static Future<List<GeoMap>> getMyMaps(CustomUser user) async {
+    final FirebaseFirestore firestore = FirebaseFirestore.instance;
+
+    // Récupérer les cartes dont l'utilisateur est propriétaire
+    final ownerMapsSnapshot = await firestore
+        .collection('geoMap')
+        .where('ownerId', isEqualTo: user.id)
+        .get();
+
+    // Créer une liste de GeoMap à partir des résultats
+    List<GeoMap> maps = [];
+
+    // Ajouter les cartes où l'utilisateur est propriétaire
+    for (var map in ownerMapsSnapshot.docs) {
+      maps.add(await GeoMap.getGeoMapById(map.id));
+    }
+
+    return maps;
+  }
+
+  // Méthode pour récupérer toutes les cartes partagées avec un CustomUser
+  static Future<List<GeoMap>> getSharedMaps(CustomUser user) async {
+    final FirebaseFirestore firestore = FirebaseFirestore.instance;
+
+    // Récupérer les cartes partagées avec l'utilisateur
+    final sharedMapsSnapshot = await firestore
+        .collection('geoMap')
+        .where('sharedWith', arrayContains: user.id)
+        .get();
+
+    // Créer une liste de GeoMap à partir des résultats
+    List<GeoMap> maps = [];
+
+    // Ajouter les cartes où l'utilisateur est dans la liste des partagés
+    for (var map in sharedMapsSnapshot.docs) {
+      maps.add(await GeoMap.getGeoMapById(map.id));
+    }
+
+    return maps;
+  }
 }
