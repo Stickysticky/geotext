@@ -2,28 +2,39 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:geotext/commonWidgets/customAppBar.dart';
+import 'package:geotext/models/geoMap.dart';
+import 'package:geotext/providers/connectedUserProvider.dart';
 
 import '../../generated/l10n.dart';
+import 'mapCard.dart';
 
 class MyMaps extends ConsumerWidget {
   const MyMaps({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    List<GeoMap> myMaps = ref.watch(connectedUserNotifierProvider)!.geoMapsOwner;
+    List<GeoMap> mySharedMaps = ref.watch(connectedUserNotifierProvider)!.geoMapsShared;
+
+    List<GeoMap> combinedMaps = [...myMaps, ...mySharedMaps];
+    combinedMaps.sort((a, b) => a.title.toLowerCase().compareTo(b.title.toLowerCase()));
+
     return Scaffold(
       backgroundColor: Colors.brown.shade50,
       appBar: CustomAppBar(S.of(context).myMaps),
-      body: Stack( // Utilisez Stack pour empiler des widgets
+      body: Stack(
         children: [
           Column(
             children: [
-              // Ajoutez ici vos autres widgets de contenu
               Expanded(
                 child: ListView.builder(
-                  itemCount: 10, // Exemple de nombre d'éléments dans la liste
+                  itemCount: combinedMaps.length,
                   itemBuilder: (context, index) {
                     return ListTile(
-                      title: Text('Carte $index'),
+                      title: MapCard(
+                        title: combinedMaps[index].title,
+                        isOwned: combinedMaps[index].owner.id == ref.watch(connectedUserNotifierProvider)!.id
+                      ),
                     );
                   },
                 ),

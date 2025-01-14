@@ -26,7 +26,7 @@ class AuthService {
       if(user is User){
         CustomUser? myUser = await CustomUser.getFromFirestore(user.uid);
 
-        if(myUser is User){
+        if(myUser is CustomUser){
           myUser!.geoMapsOwner = await GeoMap.getMyMaps(myUser);
           myUser.geoMapsShared = await GeoMap.getSharedMaps(myUser);
         }
