@@ -32,7 +32,7 @@ class MyMaps extends ConsumerWidget {
                   itemBuilder: (context, index) {
                     return ListTile(
                       title: MapCard(
-                        title: combinedMaps[index].title,
+                        map: combinedMaps[index],
                         isOwned: combinedMaps[index].owner.id == ref.watch(connectedUserNotifierProvider)!.id
                       ),
                     );

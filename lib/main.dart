@@ -4,6 +4,7 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:geotext/screens/home/home.dart';
 import 'package:geotext/screens/myAccount/myAccount.dart';
+import 'package:geotext/screens/myMaps/mapView.dart';
 import 'package:geotext/screens/myMaps/myMaps.dart';
 import 'package:geotext/screens/wrapper.dart';
 import 'package:geotext/services/auth.dart';
@@ -49,9 +50,10 @@ class MyApp extends StatelessWidget {
       },
       home: const Wrapper(), // Point d'entrée de l'application
       routes: {
+        '/map_view': (context) => MapView(),
         '/my_maps': (context) => MyMaps(),
         '/my_account': (context) => MyAccount(),
-        '/home': (context) => Home(), // Déclare la route
+        '/home': (context) => Home(),
       },
     );
   }

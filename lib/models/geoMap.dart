@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:geotext/models/customUser.dart';
+import 'package:latlong2/latlong.dart';
 import 'package:uuid/uuid.dart';
 
 class GeoMap {
@@ -8,6 +9,7 @@ class GeoMap {
   CustomUser _owner;
   bool _isPrivate;
   List<CustomUser> _sharedWith;
+  LatLng _initialCenter;
 
   GeoMap({
     String? id,
@@ -15,16 +17,25 @@ class GeoMap {
     required CustomUser owner,
     bool isPrivate = true,
     List<CustomUser>? sharedWith,
+    LatLng? initialCenter
   })  : _id = id ?? const Uuid().v4(),
         _title = title,
         _owner = owner,
         _isPrivate = isPrivate,
-        _sharedWith = sharedWith ?? [];
+        _sharedWith = sharedWith ?? [],
+        _initialCenter = initialCenter ?? LatLng(48.8566, 2.3522)
+  ;
 
   String get id => _id;
 
   set id(String value) {
     _id = value;
+  }
+
+  LatLng get initialCenter => _initialCenter;
+
+  set initialCenter(LatLng value) {
+    _initialCenter = value;
   }
 
   String get title => _title;
@@ -101,6 +112,10 @@ class GeoMap {
       owner: owner,
       isPrivate: data['is_private'] ?? true,
       sharedWith: sharedWith,
+      initialCenter: LatLng(
+        data['initial_center'].latitude,
+        data['initial_center'].longitude,
+      ),
     );
   }
 
@@ -114,6 +129,10 @@ class GeoMap {
       'owner': _firestore.collection('user').doc(_owner.id),
       'is_private': _isPrivate,
       'shared_with': _sharedWith.map((user) => user.id).toList(),
+      'initial_center': {
+        'latitude': _initialCenter.latitude,  // Utilise latitude et longitude de _initialCenter
+        'longitude': _initialCenter.longitude,
+      },
     };
 
     // Mise à jour ou création d'un nouveau document
@@ -142,12 +161,17 @@ class GeoMap {
 
     // Ajouter les cartes où l'utilisateur est propriétaire
     for (var map in ownerMapsSnapshot.docs) {
+
       Map<String,dynamic> dataMap = map.data();
       GeoMap geoMap = GeoMap(
         id: map.id,
         title: dataMap['title'],
         owner: user,
-        isPrivate: dataMap['is_private']
+        isPrivate: dataMap['is_private'],
+        initialCenter:  LatLng(
+          dataMap['initial_center'].latitude,
+          dataMap['initial_center'].longitude,
+        ),
       );
 
       for (var fireUser in dataMap['shared_with']){
@@ -156,7 +180,6 @@ class GeoMap {
 
       maps.add(geoMap);
     }
-    print(3);
 
     return maps;
   }

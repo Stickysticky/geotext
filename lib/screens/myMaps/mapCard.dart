@@ -1,17 +1,23 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:geotext/models/geoMap.dart';
+import 'package:geotext/providers/currentMapProvider.dart';
 
-class MapCard extends StatelessWidget {
+class MapCard extends ConsumerWidget {
 
-  final String title;
+  final GeoMap map;
   final bool isOwned;
 
-  MapCard({required this.title, required this.isOwned});
+  MapCard({required this.map, required this.isOwned});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+
     return InkWell(
       onTap: () {
-        //Navigator.pushNamed(context, route);
+        ref.watch(currentMapNotifierProvider.notifier).setGeoMap(map);
+        Navigator.pushNamed(context, '/map_view');
       },
       child: Card(
         margin: EdgeInsets.fromLTRB(16.0, 26.0, 16.0, 0),
@@ -20,15 +26,15 @@ class MapCard extends StatelessWidget {
             child: Row(
               children: <Widget>[
                 Text(
-                  title,
+                  map.title,
                   style: TextStyle(fontSize: 18.0),
                 ),
                 Spacer(),
-                /*Icon(
-                iconData,
+                Icon(
+                isOwned ? Icons.workspace_premium : Icons.group,
                 color: Colors.brown.shade200,
                 size: 40,
-              )*/
+              )
               ],
             )
         ),
