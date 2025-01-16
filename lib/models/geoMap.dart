@@ -3,6 +3,8 @@ import 'package:geotext/models/customUser.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:uuid/uuid.dart';
 
+import 'geoMapPoint.dart';
+
 class GeoMap {
   String _id;
   String _title;
@@ -10,6 +12,7 @@ class GeoMap {
   bool _isPrivate;
   List<CustomUser> _sharedWith;
   LatLng _initialCenter;
+  List<GeoMapPoint> _geoMapPoints;
 
   GeoMap({
     String? id,
@@ -17,19 +20,27 @@ class GeoMap {
     required CustomUser owner,
     bool isPrivate = true,
     List<CustomUser>? sharedWith,
-    LatLng? initialCenter
+    LatLng? initialCenter,
+    List<GeoMapPoint>? geoMapPoints,
   })  : _id = id ?? const Uuid().v4(),
         _title = title,
         _owner = owner,
         _isPrivate = isPrivate,
         _sharedWith = sharedWith ?? [],
-        _initialCenter = initialCenter ?? LatLng(48.8566, 2.3522)
+        _initialCenter = initialCenter ?? LatLng(48.8566, 2.3522),
+        _geoMapPoints = geoMapPoints ?? []
   ;
 
   String get id => _id;
 
   set id(String value) {
     _id = value;
+  }
+
+  List<GeoMapPoint> get geoMapPoints => _geoMapPoints;
+
+  set geoMapPoints(List<GeoMapPoint> value) {
+    _geoMapPoints = value;
   }
 
   LatLng get initialCenter => _initialCenter;
@@ -47,6 +58,16 @@ class GeoMap {
   set owner(CustomUser value) => _owner = value;
   set isPrivate(bool value) => _isPrivate = value;
   set sharedWith(List<CustomUser> value) => _sharedWith = value;
+
+  void addGeoMapPoint(GeoMapPoint geoMapPoint) {
+    if (!_geoMapPoints.contains(geoMapPoint)) {
+      _geoMapPoints.add(geoMapPoint);
+    }
+  }
+
+  void removeGeoMapPoint(GeoMapPoint geoMapPoint) {
+    _geoMapPoints.remove(geoMapPoint);
+  }
 
   void addSharedUser(CustomUser user) {
     if (!_sharedWith.contains(user)) {
@@ -150,10 +171,9 @@ class GeoMap {
     final FirebaseFirestore firestore = FirebaseFirestore.instance;
 
     final ownerRef = firestore.collection('user').doc(user.id);
-    print(ownerRef);
     final ownerMapsSnapshot = await firestore
         .collection('geo_map')
-        //.where('owner', isEqualTo: ownerRef)
+        .where('owner', isEqualTo: ownerRef)
         .get();
 
     // Créer une liste de GeoMap à partir des résultats
@@ -161,7 +181,6 @@ class GeoMap {
 
     // Ajouter les cartes où l'utilisateur est propriétaire
     for (var map in ownerMapsSnapshot.docs) {
-
       Map<String,dynamic> dataMap = map.data();
       GeoMap geoMap = GeoMap(
         id: map.id,
@@ -186,7 +205,7 @@ class GeoMap {
 
   static Future<List<GeoMap>> getSharedMaps(CustomUser user) async {
     final FirebaseFirestore firestore = FirebaseFirestore.instance;
-    final ownerRef = firestore.collection('user').doc(user.id); // Crée une référence utilisateur
+    final ownerRef = firestore.collection('user').doc(user.id);
 
     // Récupérer les cartes partagées avec l'utilisateur
     final sharedMapsSnapshot = await firestore

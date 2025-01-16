@@ -18,25 +18,34 @@ class _MapViewState extends ConsumerState<MapView> {
   Widget build(BuildContext context) {
     final GeoMap geoMap = ref.read(currentMapNotifierProvider)!;
 
+    final markers = geoMap.geoMapPoints.map(
+        (point) => Marker(
+            point: LatLng(point.geoPoint.latitude, point.geoPoint.longitude),
+            child: Icon(
+              Icons.location_on,
+              color: Colors.red,
+              size: 40,
+            )
+        )
+    ).toList();
+
     return Scaffold(
       appBar: CustomAppBar(geoMap.title),
       body: FlutterMap(
         options: MapOptions(
-          initialCenter: LatLng(geoMap.initialCenter.latitude, geoMap.initialCenter.longitude)
+          initialCenter: LatLng(
+            geoMap.initialCenter.latitude,
+            geoMap.initialCenter.longitude,
+          ),
+          initialZoom: 13,
         ),
         children: [
           TileLayer(
             urlTemplate: "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
             subdomains: ['a', 'b', 'c'],
           ),
-          RichAttributionWidget( // Include a stylish prebuilt attribution widget that meets all requirments
-            attributions: [
-              TextSourceAttribution(
-                'OpenStreetMap contributors',
-                //onTap: () => launchUrl(Uri.parse('https://openstreetmap.org/copyright')), // (external)
-              ),
-              // Also add images...
-            ],
+          MarkerLayer(
+            markers: markers,
           ),
         ],
       ),

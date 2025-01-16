@@ -1,4 +1,6 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:geotext/models/geoMap.dart';
+import 'package:geotext/models/geoMapPoint.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'currentMapProvider.g.dart';
@@ -11,7 +13,10 @@ class CurrentMapNotifier extends _$CurrentMapNotifier {
     return null;
   }
 
-  void setGeoMap (GeoMap? map){
+  Future<void> setGeoMap (GeoMap? map) async {
     state = map;
+    if(map is GeoMap){
+      map.geoMapPoints = await GeoMapPoint.getGeoMapPointsByGeoMap(map);
+    }
   }
 }
