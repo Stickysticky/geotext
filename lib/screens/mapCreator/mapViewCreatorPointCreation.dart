@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_map/flutter_map.dart';
+import 'package:geotext/models/geoMap.dart';
 import 'package:geotext/providers/currentMapProvider.dart';
 import 'package:latlong2/latlong.dart';
 import '../../commonWidgets/customAppBar.dart';
@@ -16,21 +17,27 @@ class MapViewCreatorPointCreation extends ConsumerStatefulWidget {
 }
 
 class _MapviewCreatorPointCreationState extends ConsumerState<MapViewCreatorPointCreation> {
-  // Point initial de la carte : Paris
-  LatLng _center = LatLng(48.8566, 2.3522); // Coordonnées de Paris
-  List<Marker> markers = [
-    Marker(
-      point: LatLng(48.8566, 2.3522),
+  List<Marker> geoMapPoints = [];
+
+  @override
+  void initState() {
+    super.initState();
+  }
+
+
+  @override
+  Widget build(BuildContext context) {
+
+    GeoMap geoMap = ref.read(currentMapNotifierProvider)!;
+    Marker center = Marker(
+      point: geoMap.initialCenter,
       child: Icon(
         Icons.location_on,
         color: Colors.pink.shade400,
         size: 40,
       ),
-    ),
-  ];
+    );
 
-  @override
-  Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.brown.shade50,
       appBar: CustomAppBar(capitalizeFirstLetter(S.of(context).mapCreation)),
@@ -54,12 +61,10 @@ class _MapviewCreatorPointCreationState extends ConsumerState<MapViewCreatorPoin
             Expanded(
               child: FlutterMap(
                 options: MapOptions(
-                  initialCenter: _center,
+                  initialCenter: geoMap.initialCenter,
                   onTap: (tapPosition, point) {
-                    // Lorsque l'utilisateur clique sur la carte, ajoutez un marqueur
                     setState(() {
-                      _center = point;
-                      markers = [
+                      geoMapPoints.add(
                         Marker(
                           point: point,
                           child: Icon(
@@ -68,7 +73,7 @@ class _MapviewCreatorPointCreationState extends ConsumerState<MapViewCreatorPoin
                             size: 40,
                           ),
                         ),
-                      ];
+                      );
                     });
                   },
                 ),
@@ -78,7 +83,7 @@ class _MapviewCreatorPointCreationState extends ConsumerState<MapViewCreatorPoin
                     subdomains: ['a', 'b', 'c'],
                   ),
                   MarkerLayer(
-                    markers: markers,
+                    markers: [center] + geoMapPoints,
                   ),
                 ],
               ),
@@ -87,10 +92,10 @@ class _MapviewCreatorPointCreationState extends ConsumerState<MapViewCreatorPoin
               padding: const EdgeInsets.all(16.0),
               child: IconButton(
                 onPressed: () {
-                  ref.watch(currentMapNotifierProvider.notifier).updateCenterMap(_center);
-                  Navigator.pushNamed(context, '/map_creator_point_creation');
+                  //ref.watch(currentMapNotifierProvider.notifier).updateCenterMap(_center);
+                  //Navigator.pushNamed(context, '/map_creator_point_creation');
                 },
-                icon: const Icon(Icons.arrow_right),
+                icon: const Icon(Icons.check),
                 style: IconButton.styleFrom(
                   backgroundColor: Colors.pink.shade400,
                 ),
