@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_map_marker_popup/flutter_map_marker_popup.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:geotext/models/geoMap.dart';
@@ -13,30 +14,26 @@ class MapViewCreatorPointCreation extends ConsumerStatefulWidget {
   const MapViewCreatorPointCreation({super.key});
 
   @override
-  ConsumerState<MapViewCreatorPointCreation> createState() => _MapviewCreatorPointCreationState();
+  ConsumerState<MapViewCreatorPointCreation> createState() =>
+      _MapviewCreatorPointCreationState();
 }
 
-class _MapviewCreatorPointCreationState extends ConsumerState<MapViewCreatorPointCreation> {
+class _MapviewCreatorPointCreationState
+    extends ConsumerState<MapViewCreatorPointCreation> {
   List<Marker> geoMapPoints = [];
+  List<Marker> popupMarkers = [];
+  late final MapController _mapController;
+  LatLng? selectedPoint;
 
   @override
   void initState() {
     super.initState();
+    _mapController = MapController();
   }
-
 
   @override
   Widget build(BuildContext context) {
-
     GeoMap geoMap = ref.read(currentMapNotifierProvider)!;
-    Marker center = Marker(
-      point: geoMap.initialCenter,
-      child: Icon(
-        Icons.location_on,
-        color: Colors.pink.shade400,
-        size: 40,
-      ),
-    );
 
     return Scaffold(
       backgroundColor: Colors.brown.shade50,
@@ -49,7 +46,7 @@ class _MapviewCreatorPointCreationState extends ConsumerState<MapViewCreatorPoin
             Padding(
               padding: const EdgeInsets.all(16.0),
               child: Text(
-                'Veuillez ajouter au moins un point',//S.of(context).infoMapPointCreation,
+                'Veuillez ajouter au moins un point', // S.of(context).infoMapPointCreation,
                 style: TextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.bold,
@@ -60,21 +57,26 @@ class _MapviewCreatorPointCreationState extends ConsumerState<MapViewCreatorPoin
             // La carte OpenStreetMap
             Expanded(
               child: FlutterMap(
+                mapController: _mapController,
                 options: MapOptions(
                   initialCenter: geoMap.initialCenter,
                   onTap: (tapPosition, point) {
+                    Marker marker = Marker(
+                      point: point,
+                      child: Icon(
+                        Icons.location_on,
+                        color: Colors.pink.shade400,
+                        size: 40,
+                      ),
+                    );
+
                     setState(() {
-                      geoMapPoints.add(
-                        Marker(
-                          point: point,
-                          child: Icon(
-                            Icons.location_on,
-                            color: Colors.pink.shade400,
-                            size: 40,
-                          ),
-                        ),
-                      );
+                      geoMapPoints.add(marker);
+                      _mapController.move(point, 13);
+                      popupMarkers.add(marker);
                     });
+
+                    print(popupMarkers);
                   },
                 ),
                 children: [
@@ -83,8 +85,18 @@ class _MapviewCreatorPointCreationState extends ConsumerState<MapViewCreatorPoin
                     subdomains: ['a', 'b', 'c'],
                   ),
                   MarkerLayer(
-                    markers: [center] + geoMapPoints,
+                    markers: geoMapPoints,
                   ),
+                  PopupMarkerLayer(
+                      options: PopupMarkerLayerOptions(
+                          markers: popupMarkers,
+                        /*popupDisplayOptions: PopupDisplayOptions(
+                          builder: (BuildContext context, Marker marker) =>
+                              ExamplePopup(marker),
+                        ),*/
+                      )
+                  )
+
                 ],
               ),
             ),
@@ -92,8 +104,7 @@ class _MapviewCreatorPointCreationState extends ConsumerState<MapViewCreatorPoin
               padding: const EdgeInsets.all(16.0),
               child: IconButton(
                 onPressed: () {
-                  //ref.watch(currentMapNotifierProvider.notifier).updateCenterMap(_center);
-                  //Navigator.pushNamed(context, '/map_creator_point_creation');
+                  // Ajoutez votre logique pour valider ou enregistrer les données
                 },
                 icon: const Icon(Icons.check),
                 style: IconButton.styleFrom(
