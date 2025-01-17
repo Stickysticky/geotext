@@ -289,6 +289,56 @@ class S {
       args: [],
     );
   }
+
+  /// `map creation`
+  String get mapCreation {
+    return Intl.message(
+      'map creation',
+      name: 'mapCreation',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `title`
+  String get title {
+    return Intl.message(
+      'title',
+      name: 'title',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `title required`
+  String get titleRequired {
+    return Intl.message(
+      'title required',
+      name: 'titleRequired',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `put in private`
+  String get isPrivate {
+    return Intl.message(
+      'put in private',
+      name: 'isPrivate',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Click on the map to select the center of your map.`
+  String get infoMapInitPoint {
+    return Intl.message(
+      'Click on the map to select the center of your map.',
+      name: 'infoMapInitPoint',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

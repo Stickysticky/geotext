@@ -30,9 +30,14 @@ class MessageLookup extends MessageLookupByLibrary {
             "entrez un mot de passe de plus de 6 caractères"),
         "errorTitle":
             MessageLookupByLibrary.simpleMessage("une erreur a eu lieu"),
+        "infoMapInitPoint": MessageLookupByLibrary.simpleMessage(
+            "Cliquez sur la carte pour sélectionner le centre de votre carte."),
         "invalidEmail": MessageLookupByLibrary.simpleMessage(
             "veuillez entrer un email valide"),
+        "isPrivate": MessageLookupByLibrary.simpleMessage("Rendre privé"),
         "logout": MessageLookupByLibrary.simpleMessage("déconnexion"),
+        "mapCreation":
+            MessageLookupByLibrary.simpleMessage("création de carte"),
         "myAccount": MessageLookupByLibrary.simpleMessage("mon compte"),
         "myFriends": MessageLookupByLibrary.simpleMessage("mes amis"),
         "myMaps": MessageLookupByLibrary.simpleMessage("mes cartes"),
@@ -52,6 +57,8 @@ class MessageLookup extends MessageLookupByLibrary {
             "une erreur a eu lieu lors de la connexion. Veuillez vérifier votre mail et votre mot de passe."),
         "signInTitle":
             MessageLookupByLibrary.simpleMessage("connexion à Geotext"),
+        "title": MessageLookupByLibrary.simpleMessage("titre"),
+        "titleRequired": MessageLookupByLibrary.simpleMessage("titre requis"),
         "unknownErrorRegister": MessageLookupByLibrary.simpleMessage(
             "une erreur a eu lieu lors de l\'inscription. Veuillez vérifier les informations et réessayer plus tard."),
         "userDisplayName":

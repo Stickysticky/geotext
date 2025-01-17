@@ -3,6 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:geotext/screens/home/home.dart';
+import 'package:geotext/screens/mapCreator/mapViewCreatorInitPoint.dart';
+import 'package:geotext/screens/mapCreator/mapViewCreatorPointCreation.dart';
+import 'package:geotext/screens/mapCreator/mapViewCreatorTextData.dart';
 import 'package:geotext/screens/myAccount/myAccount.dart';
 import 'package:geotext/screens/myMaps/mapView.dart';
 import 'package:geotext/screens/myMaps/myMaps.dart';
@@ -51,6 +54,9 @@ class MyApp extends StatelessWidget {
       home: const Wrapper(), // Point d'entrée de l'application
       routes: {
         '/map_view': (context) => MapView(),
+        '/map_creation': (context) => MapViewCreatorTextData(),
+        '/map_creator_init_point': (context) => MapViewCreatorInitPoint(),
+        '/map_creator_point_creation': (context) => MapViewCreatorPointCreation(),
         '/my_maps': (context) => MyMaps(),
         '/my_account': (context) => MyAccount(),
         '/home': (context) => Home(),

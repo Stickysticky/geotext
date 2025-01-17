@@ -14,24 +14,49 @@ class MapView extends ConsumerStatefulWidget {
 }
 
 class _MapViewState extends ConsumerState<MapView> {
+  List<Marker> markers = [];
+  bool isLoading = true;
+
+  @override
+  void initState() {
+    super.initState();
+    _loadMarkers();
+  }
+
+  Future<void> _loadMarkers() async {
+    final GeoMap geoMap = ref.read(currentMapNotifierProvider)!;
+
+    await Future.delayed(const Duration(seconds: 2));
+
+    setState(() {
+      markers = geoMap.geoMapPoints
+          .map(
+            (point) => Marker(
+          point: LatLng(point.geoPoint.latitude, point.geoPoint.longitude),
+          child: const Icon(
+            Icons.location_on,
+            color: Colors.red,
+            size: 40,
+          ),
+        ),
+      )
+          .toList();
+
+      isLoading = false;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     final GeoMap geoMap = ref.read(currentMapNotifierProvider)!;
 
-    final markers = geoMap.geoMapPoints.map(
-        (point) => Marker(
-            point: LatLng(point.geoPoint.latitude, point.geoPoint.longitude),
-            child: Icon(
-              Icons.location_on,
-              color: Colors.red,
-              size: 40,
-            )
-        )
-    ).toList();
-
     return Scaffold(
       appBar: CustomAppBar(geoMap.title),
-      body: FlutterMap(
+      body: isLoading
+          ? const Center(
+        child: CircularProgressIndicator(), // Afficher le loader
+      )
+          : FlutterMap(
         options: MapOptions(
           initialCenter: LatLng(
             geoMap.initialCenter.latitude,

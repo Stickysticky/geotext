@@ -23,5 +23,11 @@
     "cancel": "cancel",
     "save": "save",
     "myFriends": "my friends",
-    "notifications": "notifications"
+    "notifications": "notifications",
+    "mapCreation": "map creation",
+    "title": "title",
+    "titleRequired": "title required",
+    "isPrivate": "put in private",
+    "infoMapInitPoint": "Click on the map to select the center of your map."
+
 }

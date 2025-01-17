@@ -48,7 +48,7 @@ class MyMaps extends ConsumerWidget {
             right: 16,  // Distance du bord droit de l'écran
             child: IconButton(
               onPressed: () {
-                // Votre action ici
+                Navigator.pushNamed(context, '/map_creation');
               },
               icon: Icon(Icons.plus_one),
               style: ButtonStyle(

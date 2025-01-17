@@ -30,9 +30,13 @@ class MessageLookup extends MessageLookupByLibrary {
             "enter a password 6+ char long"),
         "errorTitle":
             MessageLookupByLibrary.simpleMessage("an error has occurred"),
+        "infoMapInitPoint": MessageLookupByLibrary.simpleMessage(
+            "Click on the map to select the center of your map."),
         "invalidEmail":
             MessageLookupByLibrary.simpleMessage("please enter a valid email"),
+        "isPrivate": MessageLookupByLibrary.simpleMessage("put in private"),
         "logout": MessageLookupByLibrary.simpleMessage("logout"),
+        "mapCreation": MessageLookupByLibrary.simpleMessage("map creation"),
         "myAccount": MessageLookupByLibrary.simpleMessage("my account"),
         "myFriends": MessageLookupByLibrary.simpleMessage("my friends"),
         "myMaps": MessageLookupByLibrary.simpleMessage("my maps"),
@@ -52,6 +56,8 @@ class MessageLookup extends MessageLookupByLibrary {
             "an error occurred while connecting. Please check your email and password."),
         "signInTitle":
             MessageLookupByLibrary.simpleMessage("sign in to Geotext"),
+        "title": MessageLookupByLibrary.simpleMessage("title"),
+        "titleRequired": MessageLookupByLibrary.simpleMessage("title required"),
         "unknownErrorRegister": MessageLookupByLibrary.simpleMessage(
             "an error occured while registering. Please check your informations and try later"),
         "userDisplayName": MessageLookupByLibrary.simpleMessage("display name"),
