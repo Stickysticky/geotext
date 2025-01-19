@@ -29,6 +29,21 @@ class _MapViewCreatorTextDataState extends ConsumerState<MapViewCreatorTextData>
     return Scaffold(
       backgroundColor: Colors.brown.shade50,
       appBar: CustomAppBar(capitalizeFirstLetter(S.of(context).mapCreation)),
+      floatingActionButton: IconButton(
+        onPressed: () async {
+          if (_formKey.currentState!.validate()) {
+            _formKey.currentState!.save(); // Sauvegarder les valeurs du formulaire
+            await _createGeoMap(currentUser); // Appeler la fonction de création
+          }
+        },
+        icon: const Icon(Icons.arrow_right), // Icône "Valider"
+        style: IconButton.styleFrom(
+          backgroundColor: Colors.pink.shade400,
+        ),
+        color: Colors.white,
+        iconSize: 40,
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       body: Padding(
         padding: const EdgeInsets.fromLTRB(16.0, 36.0, 16.0, 16.0),
         child: Form(
@@ -103,7 +118,7 @@ class _MapViewCreatorTextDataState extends ConsumerState<MapViewCreatorTextData>
               ),
               const SizedBox(height: 16),
 
-              IconButton(
+              /*IconButton(
                 onPressed: () async {
                   if (_formKey.currentState!.validate()) {
                     _formKey.currentState!.save(); // Sauvegarder les valeurs du formulaire
@@ -116,7 +131,7 @@ class _MapViewCreatorTextDataState extends ConsumerState<MapViewCreatorTextData>
                 ),
                 color: Colors.white,
                 iconSize: 40,
-              ),
+              ),*/
 
             ],
           ),

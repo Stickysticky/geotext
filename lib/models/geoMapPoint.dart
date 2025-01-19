@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:latlong2/latlong.dart';
+import 'package:uuid/uuid.dart';
 
 import 'customUser.dart';
 import 'geoMap.dart';
@@ -9,16 +10,30 @@ class GeoMapPoint {
   String _title;
   String? _message;
   GeoMap _geoMap;
+  GeoPoint _geoPoint;
+  CustomUser _creator;
 
   @override
   String toString() {
     return 'GeoMapPoint{_id: $_id, _title: $_title, _message: $_message, _geoMap: $_geoMap, _geoPoint: $_geoPoint, _creator: $_creator}';
   }
 
-  GeoPoint _geoPoint;
-  CustomUser _creator;
 
-  GeoMapPoint(this._id, this._title, this._message, this._geoMap, this._geoPoint, this._creator);
+
+  GeoMapPoint({
+    String? id,
+    required String title,
+    String? message,
+    required GeoMap geoMap,
+    required GeoPoint geoPoint,
+    required CustomUser creator,
+  })  : _id = id ?? const Uuid().v4(),
+        _title = title,
+        _message = message,
+        _geoMap = geoMap,
+        _geoPoint = geoPoint,
+        _creator = creator;
+
 
   String get id => _id;
   set id(String value) {
@@ -92,12 +107,12 @@ class GeoMapPoint {
 
       // Ajouter un GeoMapPoint à la liste
       geoMapPoints.add(GeoMapPoint(
-        docSnapshot.id,          // L'ID du GeoMapPoint
-        data['title'],
-        data['message'],
-        geoMap,                  // Le GeoMap associé
-        geoPoint,                // Le GeoPoint
-        creator,                 // Le créateur
+        id: docSnapshot.id,          // L'ID du GeoMapPoint
+        title: data['title'],
+        message :data['message'],
+        geoMap: geoMap,                  // Le GeoMap associé
+        geoPoint: geoPoint,                // Le GeoPoint
+        creator: creator,                 // Le créateur
       ));
     }
 
@@ -154,12 +169,12 @@ class GeoMapPoint {
     );
 
     return GeoMapPoint(
-      docSnapshot.id,      // L'ID du document GeoMapPoint
-      data['title'],
-      data['message'],
-      geoMap,               // Le GeoMap associé
-      geoPoint,            // Les coordonnées du GeoPoint
-      creator,              // Le créateur
+      id: docSnapshot.id,      // L'ID du document GeoMapPoint
+      title: data['title'],
+      message: data['message'],
+      geoMap: geoMap,               // Le GeoMap associé
+      geoPoint: geoPoint,            // Les coordonnées du GeoPoint
+      creator: creator,              // Le créateur
     );
   }
 

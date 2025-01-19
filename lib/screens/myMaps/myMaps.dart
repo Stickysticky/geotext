@@ -22,6 +22,18 @@ class MyMaps extends ConsumerWidget {
     return Scaffold(
       backgroundColor: Colors.brown.shade50,
       appBar: CustomAppBar(S.of(context).myMaps),
+      floatingActionButton: IconButton(
+        onPressed: () {
+          Navigator.pushNamed(context, '/map_creation');
+        },
+        icon: Icon(Icons.plus_one),
+        style: ButtonStyle(
+          backgroundColor: WidgetStateProperty.all(Colors.pink.shade400),
+        ),
+        color: Colors.white,
+        iconSize: 40,
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
       body: Stack(
         children: [
           Column(
@@ -43,7 +55,7 @@ class MyMaps extends ConsumerWidget {
           ),
 
           // Le bouton flottant positionné en bas à droite
-          Positioned(
+          /*Positioned(
             bottom: 16, // Distance du bas de l'écran
             right: 16,  // Distance du bord droit de l'écran
             child: IconButton(
@@ -57,7 +69,7 @@ class MyMaps extends ConsumerWidget {
               color: Colors.white,
               iconSize: 40,
             ),
-          ),
+          ),*/
         ],
       ),
     );
