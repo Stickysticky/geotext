@@ -55,21 +55,21 @@ class _MapViewCreatorTextDataState extends ConsumerState<MapViewCreatorTextData>
                 decoration: InputDecoration(
                   labelText: capitalizeFirstLetter(S.of(context).title),
                   labelStyle: TextStyle(
-                    color: Colors.pink.shade400,
+                    //color: Colors.pink.shade400,
                     fontSize: 30,
-                    fontWeight: FontWeight.bold,
+                    //fontWeight: FontWeight.bold,
                   ),
                   border: const OutlineInputBorder(),
                   enabledBorder: OutlineInputBorder(
                     borderSide: BorderSide(
-                      color: Colors.grey.shade400,
-                      width: 2.0,
+                      //color: Colors.grey.shade400,
+                      width: 1.0,
                     ),
                   ),
                   focusedBorder: OutlineInputBorder(
                     borderSide: BorderSide(
-                      color: Colors.pink.shade400,
-                      width: 2.0,
+                      //color: Colors.pink.shade400,
+                      width: 1.0,
                     ),
                   ),
                   errorStyle: TextStyle(
@@ -86,7 +86,7 @@ class _MapViewCreatorTextDataState extends ConsumerState<MapViewCreatorTextData>
                 },
                 onSaved: (value) => _title = value,
                 style: TextStyle(
-                  decorationColor: Colors.pink.shade400,
+                  //decorationColor: Colors.pink.shade400,
                 ),
               ),
 
@@ -99,9 +99,9 @@ class _MapViewCreatorTextDataState extends ConsumerState<MapViewCreatorTextData>
                   Text(
                     capitalizeFirstLetter(S.of(context).isPrivate),
                     style: TextStyle(
-                      color: Colors.pink.shade400,
+                      //color: Colors.pink.shade400,
                         fontSize: 25,
-                      fontWeight: FontWeight.bold
+                      //fontWeight: FontWeight.bold
                     ),
 
                   ),
