@@ -1,13 +1,14 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart'; // Importez Riverpod
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:geotext/models/geoMap.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../models/customUser.dart';
-import 'package:geotext/providers/connectedUserProvider.dart'; // Importez votre notifier
+import 'package:geotext/providers/connectedUserProvider.dart';
 
 class AuthService {
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
-  final Ref ref; // Ajoutez une référence pour accéder aux providers
+  final Ref ref;
 
   AuthService(this.ref);
 
@@ -31,6 +32,10 @@ class AuthService {
           myUser.geoMapsShared = await GeoMap.getSharedMaps(myUser);
         }
         ref.read(connectedUserNotifierProvider.notifier).setUser(myUser);
+
+        SharedPreferences prefs = await SharedPreferences.getInstance();
+        await prefs.setString('email', email);
+        await prefs.setString('password', password);
 
         return myUser;
       } else {
@@ -59,6 +64,9 @@ class AuthService {
 
       // Mettez à jour l'état de ConnectedUserNotifier
       ref.read(connectedUserNotifierProvider.notifier).setUser(myUser);
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      await prefs.setString('email', email);
+      await prefs.setString('password', password);
 
       return myUser;
     } catch (e) {
@@ -69,6 +77,9 @@ class AuthService {
 
   Future<void> signOut() async {
     try {
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      await prefs.remove('email');
+      await prefs.remove('password');
       await _auth.signOut();
 
       // Réinitialisez l'état de ConnectedUserNotifier à null

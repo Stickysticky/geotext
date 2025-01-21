@@ -3,7 +3,9 @@ import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:geotext/providers/currentGeoMapPointProvider.dart';
 
+import '../../generated/l10n.dart';
 import '../../models/geoMapPoint.dart';
+import '../../services/utils.dart';
 
 class GeoMapPointCreator extends ConsumerStatefulWidget {
   const GeoMapPointCreator({super.key});
@@ -33,21 +35,21 @@ class _GeoMapPointCreatorState extends ConsumerState<GeoMapPointCreator> {
           // Champ pour le titre
           TextFormField(
             initialValue: point?.title ?? '',
-            decoration: const InputDecoration(
-              labelText: 'Titre',
+            decoration: InputDecoration(
+              labelText: capitalizeFirstLetter(S.of(context).title),
               border: OutlineInputBorder(),
             ),
             onSaved: (value) => _title = value ?? '',
             validator: (value) =>
-            (value == null || value.isEmpty) ? 'Le titre est requis' : null,
+            (value == null || value.isEmpty) ? capitalizeFirstLetter(S.of(context).titleRequired) : null,
           ),
           const SizedBox(height: 16),
 
           // Champ pour le message
           TextFormField(
             initialValue: point?.message ?? '',
-            decoration: const InputDecoration(
-              labelText: 'Message',
+            decoration: InputDecoration(
+              labelText: capitalizeFirstLetter(S.of(context).message),
               border: OutlineInputBorder(),
               alignLabelWithHint: true, // Aligne le label avec le haut du champ
             ),
@@ -58,8 +60,8 @@ class _GeoMapPointCreatorState extends ConsumerState<GeoMapPointCreator> {
 
 
           // Sélecteur de couleur
-          const Text(
-            'Couleur :',
+          Text(
+            '${capitalizeFirstLetter(S.of(context).color)} :',
             style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
           ),
           const SizedBox(height: 10),
@@ -82,19 +84,19 @@ class _GeoMapPointCreatorState extends ConsumerState<GeoMapPointCreator> {
           // Champ pour le rayon
           TextFormField(
             initialValue: '1',//point?.radius.toString() ?? '50',
-            decoration: const InputDecoration(
-              labelText: 'Rayon (m)',
+            decoration: InputDecoration(
+              labelText: capitalizeFirstLetter(S.of(context).radiusInfo),
               border: OutlineInputBorder(),
             ),
             keyboardType: TextInputType.number,
             onSaved: (value) => _radius = double.tryParse(value ?? '50') ?? 50,
             validator: (value) {
               if (value == null || value.isEmpty) {
-                return 'Le rayon est requis';
+                return capitalizeFirstLetter(S.of(context).radiusRequired);
               }
               final radius = double.tryParse(value);
               if (radius == null || radius <= 0) {
-                return 'Entrez un rayon valide (> 0)';
+                return capitalizeFirstLetter(S.of(context).radiusValidation);
               }
               return null;
             },
@@ -122,11 +124,11 @@ class _GeoMapPointCreatorState extends ConsumerState<GeoMapPointCreator> {
 
                 // Fermer ou afficher une confirmation
                 ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(content: Text('Point sauvegardé !')),
+                  SnackBar(content: Text(capitalizeFirstLetter(S.of(context).pointSaved))),
                 );
               }
             },
-            child: const Text('Valider'),
+            child: Text(capitalizeFirstLetter(S.of(context).validate)),
           ),
         ],
       ),
@@ -138,7 +140,7 @@ class _GeoMapPointCreatorState extends ConsumerState<GeoMapPointCreator> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: const Text('Sélectionnez une couleur'),
+          title: Text(capitalizeFirstLetter(S.of(context).selectAColor)),
           content: SingleChildScrollView(
             child: BlockPicker(
               pickerColor: _selectedColor,
@@ -151,7 +153,7 @@ class _GeoMapPointCreatorState extends ConsumerState<GeoMapPointCreator> {
           ),
           actions: <Widget>[
             TextButton(
-              child: const Text('Fermer'),
+              child: Text(capitalizeFirstLetter(S.of(context).close)),
               onPressed: () {
                 Navigator.of(context).pop();
               },

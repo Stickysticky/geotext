@@ -28,5 +28,16 @@
     "title": "titre",
     "titleRequired": "titre requis",
     "isPrivate": "Rendre privé",
-    "infoMapInitPoint": "Cliquez sur la carte pour sélectionner le centre de votre carte."
+    "infoMapInitPoint": "Cliquez sur la carte pour sélectionner le centre de votre carte.",
+    "pleaseAddPoint": "Veuillez ajouter au moins un point",
+    "titleRequired": "Le titre est requis",
+    "message": "message",
+    "color": "couleur",
+    "radiusInfo": "radius (m)",
+    "radiusRequired": "le rayon est requis",
+    "radiusValidation": "entrez un rayon valide (> 0)",
+    "pointSaved": "point sauvegardé !"
+    "validate": "valider",
+    "selectAColor": "Sélectionnez une couleur",
+    "close": "Fermer"
 }

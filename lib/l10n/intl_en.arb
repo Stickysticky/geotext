@@ -28,6 +28,16 @@
     "title": "title",
     "titleRequired": "title required",
     "isPrivate": "put in private",
-    "infoMapInitPoint": "Click on the map to select the center of your map."
-
+    "infoMapInitPoint": "Click on the map to select the center of your map.",
+    "pleaseAddPoint": "Please add at least one point",
+    "titleRequired": "The title is required",
+    "message": "message",
+    "color": "color",
+    "radiusInfo": "rayon (m)",
+    "radiusRequired": "the radius is required",
+    "radiusValidation": "enter a valid radius (> 0)",
+    "pointSaved": "point saved !",
+    "validate": "validate",
+    "selectAColor": "select a color",
+    "close": "fermer"
 }

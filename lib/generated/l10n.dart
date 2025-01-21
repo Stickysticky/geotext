@@ -310,10 +310,10 @@ class S {
     );
   }
 
-  /// `title required`
+  /// `The title is required`
   String get titleRequired {
     return Intl.message(
-      'title required',
+      'The title is required',
       name: 'titleRequired',
       desc: '',
       args: [],
@@ -335,6 +335,106 @@ class S {
     return Intl.message(
       'Click on the map to select the center of your map.',
       name: 'infoMapInitPoint',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Please add at least one point`
+  String get pleaseAddPoint {
+    return Intl.message(
+      'Please add at least one point',
+      name: 'pleaseAddPoint',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `message`
+  String get message {
+    return Intl.message(
+      'message',
+      name: 'message',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `color`
+  String get color {
+    return Intl.message(
+      'color',
+      name: 'color',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `rayon (m)`
+  String get radiusInfo {
+    return Intl.message(
+      'rayon (m)',
+      name: 'radiusInfo',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `the radius is required`
+  String get radiusRequired {
+    return Intl.message(
+      'the radius is required',
+      name: 'radiusRequired',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `enter a valid radius (> 0)`
+  String get radiusValidation {
+    return Intl.message(
+      'enter a valid radius (> 0)',
+      name: 'radiusValidation',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `point saved !`
+  String get pointSaved {
+    return Intl.message(
+      'point saved !',
+      name: 'pointSaved',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `validate`
+  String get validate {
+    return Intl.message(
+      'validate',
+      name: 'validate',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `select a color`
+  String get selectAColor {
+    return Intl.message(
+      'select a color',
+      name: 'selectAColor',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `fermer`
+  String get close {
+    return Intl.message(
+      'fermer',
+      name: 'close',
       desc: '',
       args: [],
     );
