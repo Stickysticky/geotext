@@ -76,7 +76,7 @@ class _MapviewCreatorPointCreationState
                   child: Padding(
                     padding: const EdgeInsets.fromLTRB(16.0, 16.0, 16.0, 0),
                     child: Text(
-                      'Veuillez ajouter au moins un point', // S.of(context).infoMapPointCreation,
+                      S.of(context).pleaseAddPoint,
                       style: TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.bold,

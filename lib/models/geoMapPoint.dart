@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/material.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:uuid/uuid.dart';
 
@@ -12,13 +13,20 @@ class GeoMapPoint {
   GeoMap _geoMap;
   GeoPoint _geoPoint;
   CustomUser _creator;
+  Color _color;
+
+  Color get color => _color;
+
+  set color(Color value) {
+    _color = value;
+  }
+
+  double _radius;
 
   @override
   String toString() {
-    return 'GeoMapPoint{_id: $_id, _title: $_title, _message: $_message, _geoMap: $_geoMap, _geoPoint: $_geoPoint, _creator: $_creator}';
+    return 'GeoMapPoint{_id: $_id, _title: $_title, _message: $_message, _geoMap: $_geoMap, _geoPoint: $_geoPoint, _creator: $_creator, _color: $_color, _radius: $_radius}';
   }
-
-
 
   GeoMapPoint({
     String? id,
@@ -27,12 +35,16 @@ class GeoMapPoint {
     required GeoMap geoMap,
     required GeoPoint geoPoint,
     required CustomUser creator,
+    Color? color, // Paramètre optionnel, valeur par défaut si null
+    double radius = 10.0, // Valeur par défaut
   })  : _id = id ?? const Uuid().v4(),
         _title = title,
         _message = message,
         _geoMap = geoMap,
         _geoPoint = geoPoint,
-        _creator = creator;
+        _creator = creator,
+        _color = color ?? Colors.pink.shade400, // Définit une couleur par défaut
+        _radius = radius;
 
 
   String get id => _id;
@@ -49,6 +61,18 @@ class GeoMapPoint {
   GeoMap get geoMap => _geoMap;
   set geoMap(GeoMap value) {
     _geoMap = value;
+  }
+
+  String? get message => _message;
+
+  set message(String? value) {
+    _message = value;
+  }
+
+  double get radius => _radius;
+
+  set radius(double value) {
+    _radius = value;
   }
 
   GeoPoint get geoPoint => _geoPoint;
@@ -110,6 +134,8 @@ class GeoMapPoint {
         id: docSnapshot.id,          // L'ID du GeoMapPoint
         title: data['title'],
         message :data['message'],
+        color: Color(data['color'] as int),
+        radius: data['radius'],
         geoMap: geoMap,                  // Le GeoMap associé
         geoPoint: geoPoint,                // Le GeoPoint
         creator: creator,                 // Le créateur
@@ -172,15 +198,13 @@ class GeoMapPoint {
       id: docSnapshot.id,      // L'ID du document GeoMapPoint
       title: data['title'],
       message: data['message'],
+      color: Color(data['color'] as int),
+      radius: data['radius'],
       geoMap: geoMap,               // Le GeoMap associé
       geoPoint: geoPoint,            // Les coordonnées du GeoPoint
       creator: creator,              // Le créateur
     );
   }
 
-  String? get message => _message;
 
-  set message(String? value) {
-    _message = value;
-  }
 }
