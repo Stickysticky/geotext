@@ -1,14 +1,28 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:geotext/models/geoMap.dart';
 import 'package:geotext/providers/currentGeoMapPointProvider.dart';
+import 'package:geotext/providers/currentMapProvider.dart';
 
 import '../../generated/l10n.dart';
 import '../../models/geoMapPoint.dart';
 import '../../services/utils.dart';
 
 class GeoMapPointCreator extends ConsumerStatefulWidget {
-  const GeoMapPointCreator({super.key});
+  final GeoMapPoint? _point;
+  final bool _isVisible;
+  final ValueChanged<bool> onVisibilityChanged;
+
+  GeoMapPointCreator({
+    Key? key,
+    GeoMapPoint? point,
+    required bool isVisible,
+    required this.onVisibilityChanged,
+  })  : _point = point,
+        _isVisible = isVisible,
+        super(key: key);
+
 
   @override
   ConsumerState<GeoMapPointCreator> createState() => _GeoMapPointCreatorState();
@@ -16,6 +30,20 @@ class GeoMapPointCreator extends ConsumerStatefulWidget {
 
 class _GeoMapPointCreatorState extends ConsumerState<GeoMapPointCreator> {
   final _formKey = GlobalKey<FormState>();
+  late bool _isVisible;
+
+  @override
+  void initState() {
+    super.initState();
+    _isVisible = widget._isVisible; // Initialize from parent
+  }
+
+  void _toggleVisibility() {
+    setState(() {
+      _isVisible = !_isVisible;
+    });
+    widget.onVisibilityChanged(_isVisible); // Notify parent
+  }
 
   // Variables pour gérer les champs
   String _title = '';
@@ -26,6 +54,7 @@ class _GeoMapPointCreatorState extends ConsumerState<GeoMapPointCreator> {
   @override
   Widget build(BuildContext context) {
     GeoMapPoint? point = ref.read(currentGeoMapPointNotifierProvider);
+    GeoMap map = ref.read(currentMapNotifierProvider)!;
 
     return Form(
       key: _formKey,
@@ -88,7 +117,7 @@ class _GeoMapPointCreatorState extends ConsumerState<GeoMapPointCreator> {
               labelText: capitalizeFirstLetter(S.of(context).radiusInfo),
               border: OutlineInputBorder(),
             ),
-            keyboardType: TextInputType.number,
+            //keyboardType: TextInputType.number,
             onSaved: (value) => _radius = double.tryParse(value ?? '50') ?? 50,
             validator: (value) {
               if (value == null || value.isEmpty) {
@@ -109,26 +138,28 @@ class _GeoMapPointCreatorState extends ConsumerState<GeoMapPointCreator> {
               if (_formKey.currentState!.validate()) {
                 _formKey.currentState!.save();
 
-                // Mettre à jour le GeoMapPoint
-                /*ref.read(currentGeoMapPointNotifierProvider.notifier).setGeoMapPoint(
-                  GeoMapPoint(
-                    title: _title,
-                    message: _message,
-                    color: _selectedColor,
-                    radius: _radius,
-                    geoMap: point!.geoMap,
-                    geoPoint: point.geoPoint,
-                    creator: point.creator,
-                  ),
-                );*/
+                widget._point!.title = _title;
+                widget._point!.message = _message;
+                widget._point!.color = _selectedColor;
+                widget._point!.radius = _radius;
+
+                ref.read(currentGeoMapPointNotifierProvider.notifier).setGeoMapPoint(widget._point);
+                ref.read(currentMapNotifierProvider)!.geoMapPoints.add(widget._point!);
 
                 // Fermer ou afficher une confirmation
                 ScaffoldMessenger.of(context).showSnackBar(
                   SnackBar(content: Text(capitalizeFirstLetter(S.of(context).pointSaved))),
                 );
+                //Navigator.pop(context);
+                _toggleVisibility();
               }
             },
-            child: Text(capitalizeFirstLetter(S.of(context).validate)),
+            child: Text(
+                capitalizeFirstLetter(S.of(context).validate),
+              style: TextStyle(
+                color: Colors.pink.shade400
+              ),
+            ),
           ),
         ],
       ),

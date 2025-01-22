@@ -24,6 +24,8 @@ class MessageLookup extends MessageLookupByLibrary {
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
         "appTitle": MessageLookupByLibrary.simpleMessage("geotext"),
         "cancel": MessageLookupByLibrary.simpleMessage("annuler"),
+        "close": MessageLookupByLibrary.simpleMessage("Fermer"),
+        "color": MessageLookupByLibrary.simpleMessage("couleur"),
         "email": MessageLookupByLibrary.simpleMessage("email"),
         "enterEmail": MessageLookupByLibrary.simpleMessage("entrez un email"),
         "enterPassword": MessageLookupByLibrary.simpleMessage(
@@ -38,10 +40,20 @@ class MessageLookup extends MessageLookupByLibrary {
         "logout": MessageLookupByLibrary.simpleMessage("déconnexion"),
         "mapCreation":
             MessageLookupByLibrary.simpleMessage("création de carte"),
+        "message": MessageLookupByLibrary.simpleMessage("message"),
         "myAccount": MessageLookupByLibrary.simpleMessage("mon compte"),
         "myFriends": MessageLookupByLibrary.simpleMessage("mes amis"),
         "myMaps": MessageLookupByLibrary.simpleMessage("mes cartes"),
         "notifications": MessageLookupByLibrary.simpleMessage("notifications"),
+        "pleaseAddPoint": MessageLookupByLibrary.simpleMessage(
+            "Veuillez ajouter au moins un point"),
+        "pointSaved":
+            MessageLookupByLibrary.simpleMessage("point sauvegardé !"),
+        "radiusInfo": MessageLookupByLibrary.simpleMessage("radius (m)"),
+        "radiusRequired":
+            MessageLookupByLibrary.simpleMessage("le rayon est requis"),
+        "radiusValidation": MessageLookupByLibrary.simpleMessage(
+            "entrez un rayon valide (> 0)"),
         "register": MessageLookupByLibrary.simpleMessage("inscription"),
         "registerErrorMailUsed": MessageLookupByLibrary.simpleMessage(
             "l\'adresse mail est déjà utilisée"),
@@ -52,17 +64,21 @@ class MessageLookup extends MessageLookupByLibrary {
         "registerWeakPassword": MessageLookupByLibrary.simpleMessage(
             "votre mot de passe n\'est pas assez sécurisé. Veuillez entrer un autre mot de passe."),
         "save": MessageLookupByLibrary.simpleMessage("sauvegarger"),
+        "selectAColor":
+            MessageLookupByLibrary.simpleMessage("Sélectionnez une couleur"),
         "signIn": MessageLookupByLibrary.simpleMessage("connexion"),
         "signInError": MessageLookupByLibrary.simpleMessage(
             "une erreur a eu lieu lors de la connexion. Veuillez vérifier votre mail et votre mot de passe."),
         "signInTitle":
             MessageLookupByLibrary.simpleMessage("connexion à Geotext"),
         "title": MessageLookupByLibrary.simpleMessage("titre"),
-        "titleRequired": MessageLookupByLibrary.simpleMessage("titre requis"),
+        "titleRequired":
+            MessageLookupByLibrary.simpleMessage("Le titre est requis"),
         "unknownErrorRegister": MessageLookupByLibrary.simpleMessage(
             "une erreur a eu lieu lors de l\'inscription. Veuillez vérifier les informations et réessayer plus tard."),
         "userDisplayName":
             MessageLookupByLibrary.simpleMessage("nom d\'affichage"),
-        "userName": MessageLookupByLibrary.simpleMessage("nom d\'utilisateur")
+        "userName": MessageLookupByLibrary.simpleMessage("nom d\'utilisateur"),
+        "validate": MessageLookupByLibrary.simpleMessage("valider")
       };
 }

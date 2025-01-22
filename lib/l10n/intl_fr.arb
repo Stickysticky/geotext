@@ -36,7 +36,7 @@
     "radiusInfo": "radius (m)",
     "radiusRequired": "le rayon est requis",
     "radiusValidation": "entrez un rayon valide (> 0)",
-    "pointSaved": "point sauvegardé !"
+    "pointSaved": "point sauvegardé !",
     "validate": "valider",
     "selectAColor": "Sélectionnez une couleur",
     "close": "Fermer"

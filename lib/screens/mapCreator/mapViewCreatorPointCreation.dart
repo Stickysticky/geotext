@@ -34,6 +34,9 @@ class _MapviewCreatorPointCreationState
   final PopupController _popupController = PopupController();
   double mapHeightFraction = 1.0;
   bool allPointMapVisibility = true;
+  late GeoMap geoMap;
+  GeoMapPoint? currentPoint;
+  Marker? currentMarker;
 
   @override
   void initState() {
@@ -41,14 +44,24 @@ class _MapviewCreatorPointCreationState
     _mapController = MapController();
   }
 
+  void _updateVisibility(bool isVisible) {
+    setState(() {
+      allPointMapVisibility = isVisible;
+      mapHeightFraction = isVisible ? 1 : 0.3;
+      _mapController.move(LatLng(currentPoint!.geoPoint.latitude, currentPoint!.geoPoint.longitude), 13.0);
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
-    GeoMap geoMap = ref.read(currentMapNotifierProvider)!;
+    setState(() {
+      geoMap = ref.read(currentMapNotifierProvider)!;
+    });
 
     return Scaffold(
       backgroundColor: Colors.brown.shade50,
       appBar: CustomAppBar(capitalizeFirstLetter(S.of(context).mapCreation)),
-      floatingActionButton: geoMapPoints.isNotEmpty || ref.read(currentGeoMapPointNotifierProvider) != null ?
+      floatingActionButton: geoMapPoints.isNotEmpty ?
       AnimatedContainer(
           duration: const Duration(milliseconds: 300),
           padding: EdgeInsets.fromLTRB(0, 0, 0, 10),
@@ -97,35 +110,43 @@ class _MapviewCreatorPointCreationState
                     initialCenter: geoMap.initialCenter,
                     onTap: (tapPosition, point) {
                       //_popupController.hideAllPopups();
-                      ref.read(currentGeoMapPointNotifierProvider.notifier).setGeoMapPoint(
-                        GeoMapPoint(
+                      setState(() {
+                        currentMarker = Marker(
+                          point: point,
+                          child: Icon(
+                            Icons.location_on,
+                            color: Colors.pink.shade400,
+                            size: 40,
+                          ),
+                        );
+
+                        currentPoint = GeoMapPoint(
                             title: '',
                             geoMap: geoMap,
                             geoPoint: GeoPoint(point.latitude, point.longitude),
                             creator: ref.read(connectedUserNotifierProvider)!
-                        )
+                        );
+                      });
+                      ref.read(currentGeoMapPointNotifierProvider.notifier).setGeoMapPoint(
+                        currentPoint
                       );
-                      Marker marker = Marker(
-                        point: point,
-                        child: Icon(
-                          Icons.location_on,
-                          color: Colors.pink.shade400,
-                          size: 40,
-                        ),
-                      );
-        
+
+
                       setState(() {
                         mapHeightFraction = 0.3;
                         _mapController.move(point, 20);
                         allPointMapVisibility = false;
-                        markers = [marker];
-        
-        
-                        geoMapPoints.add(marker);
-                        popupMarkers = [marker];
+                        //markers = [marker, ..._generateMarkersFromGeoMapPoints(geoMap)];
+                        //markers = [marker];
+
+
+                        //geoMapPoints.add(marker);
+                        //geoMapPoints.add(ref.read(currentGeoMapPointNotifierProvider));
+                        //popupMarkers = [marker, ..._generateMarkersFromGeoMapPoints(geoMap)];
         
                       });
-                      //_popupController.showPopupsAlsoFor(popupMarkers);
+
+                      _popupController.showPopupsAlsoFor(_generateMarkersFromGeoMapPoints(geoMap));
                     },
                   ),
                   children: [
@@ -134,11 +155,17 @@ class _MapviewCreatorPointCreationState
                       subdomains: ['a', 'b', 'c'],
                     ),
                     MarkerLayer(
-                      markers: markers,
+                      markers: [
+                        if (currentMarker != null) currentMarker!,
+                        ..._generateMarkersFromGeoMapPoints(geoMap),
+                      ],
                     ),
                     PopupMarkerLayer(
                         options: PopupMarkerLayerOptions(
-                          markers: popupMarkers,
+                          markers: [
+                            if (currentMarker != null) currentMarker!,
+                            ..._generateMarkersFromGeoMapPoints(geoMap),
+                          ],
                           popupController: _popupController,
                           popupDisplayOptions: PopupDisplayOptions(
                             builder: (BuildContext context, Marker marker) =>
@@ -152,7 +179,9 @@ class _MapviewCreatorPointCreationState
               Visibility(
                 child: Padding(
                   padding: const EdgeInsets.fromLTRB(0, 16.0, 0, 0),
-                  child: GeoMapPointCreator(),
+                  child: GeoMapPointCreator(point: currentPoint,
+                      isVisible: allPointMapVisibility,
+                      onVisibilityChanged: _updateVisibility),
                 ),
                 visible: !allPointMapVisibility,
         
@@ -176,5 +205,19 @@ class _MapviewCreatorPointCreationState
         ),
       ),
     );
+  }
+
+  List<Marker> _generateMarkersFromGeoMapPoints(GeoMap geoMap) {
+    // Convertit chaque GeoMapPoint en Marker
+    return geoMap.geoMapPoints.map((point) {
+      return Marker(
+        point: LatLng(point.geoPoint.latitude, point.geoPoint.longitude),
+        child: Icon(
+          Icons.location_on,
+          color: point.color,
+          size: 40,
+        ),
+      );
+    }).toList();
   }
 }
