@@ -50,6 +50,8 @@ class _MapviewCreatorPointCreationState
       mapHeightFraction = isVisible ? 1 : 0.3;
       _mapController.move(LatLng(currentPoint!.geoPoint.latitude, currentPoint!.geoPoint.longitude), 13.0);
     });
+
+    _popupController.showPopupsAlsoFor(_generateMarkersFromGeoMapPoints(geoMap));
   }
 
   @override
@@ -146,7 +148,7 @@ class _MapviewCreatorPointCreationState
         
                       });
 
-                      _popupController.showPopupsAlsoFor(_generateMarkersFromGeoMapPoints(geoMap));
+
                     },
                   ),
                   children: [
@@ -162,10 +164,11 @@ class _MapviewCreatorPointCreationState
                     ),
                     PopupMarkerLayer(
                         options: PopupMarkerLayerOptions(
+                            markers: _generateMarkersFromGeoMapPoints(geoMap),/*
                           markers: [
                             if (currentMarker != null) currentMarker!,
                             ..._generateMarkersFromGeoMapPoints(geoMap),
-                          ],
+                          ],*/
                           popupController: _popupController,
                           popupDisplayOptions: PopupDisplayOptions(
                             builder: (BuildContext context, Marker marker) =>
