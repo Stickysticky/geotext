@@ -26,7 +26,7 @@ class MapViewCreatorPointCreation extends ConsumerStatefulWidget {
 
 class _MapviewCreatorPointCreationState
     extends ConsumerState<MapViewCreatorPointCreation> {
-  List<Marker> geoMapPoints = [];
+  //List<Marker> geoMapPoints = [];
   late final MapController _mapController;
   final PopupController _popupController = PopupController();
   double mapHeightFraction = 1.0;
@@ -60,8 +60,8 @@ class _MapviewCreatorPointCreationState
 
     return Scaffold(
       backgroundColor: Colors.brown.shade50,
-      appBar: CustomAppBar(capitalizeFirstLetter(S.of(context).mapCreation)),
-      floatingActionButton: geoMapPoints.isNotEmpty ?
+      appBar:CustomAppBar(capitalizeFirstLetter(S.of(context).mapCreation)),
+      floatingActionButton: geoMap.geoMapPoints.isNotEmpty ?
       AnimatedContainer(
           duration: const Duration(milliseconds: 300),
           padding: EdgeInsets.fromLTRB(0, 0, 0, 10),
@@ -84,20 +84,21 @@ class _MapviewCreatorPointCreationState
           child: Column(
             children: [
               // Texte d'indication en haut de la carte
-              Visibility(
-                visible: allPointMapVisibility,
-                  child: Padding(
-                    padding: const EdgeInsets.fromLTRB(16.0, 16.0, 16.0, 0),
-                    child: Text(
-                      S.of(context).pleaseAddPoint,
-                      style: TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.pink.shade400,
+              geoMap.geoMapPoints.isEmpty ?
+                Visibility(
+                  visible: allPointMapVisibility,
+                    child: Padding(
+                      padding: const EdgeInsets.fromLTRB(16.0, 16.0, 16.0, 0),
+                      child: Text(
+                        S.of(context).pleaseAddPoint,
+                        style: TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.pink.shade400,
+                        ),
                       ),
-                    ),
-                  )
-              ),
+                    )
+                ) : Container(),
         
               // La carte OpenStreetMap
               AnimatedContainer(

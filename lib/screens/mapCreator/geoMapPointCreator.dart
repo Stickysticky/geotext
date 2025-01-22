@@ -147,9 +147,9 @@ class _GeoMapPointCreatorState extends ConsumerState<GeoMapPointCreator> {
                 ref.read(currentMapNotifierProvider)!.geoMapPoints.add(widget._point!);
 
                 // Fermer ou afficher une confirmation
-                ScaffoldMessenger.of(context).showSnackBar(
+                /*ScaffoldMessenger.of(context).showSnackBar(
                   SnackBar(content: Text(capitalizeFirstLetter(S.of(context).pointSaved))),
-                );
+                );*/
                 //Navigator.pop(context);
                 _toggleVisibility();
               }
