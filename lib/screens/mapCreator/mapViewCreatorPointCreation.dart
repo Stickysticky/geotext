@@ -27,10 +27,7 @@ class MapViewCreatorPointCreation extends ConsumerStatefulWidget {
 class _MapviewCreatorPointCreationState
     extends ConsumerState<MapViewCreatorPointCreation> {
   List<Marker> geoMapPoints = [];
-  List<Marker> markers = [];
-  List<Marker> popupMarkers = [];
   late final MapController _mapController;
-  LatLng? selectedPoint;
   final PopupController _popupController = PopupController();
   double mapHeightFraction = 1.0;
   bool allPointMapVisibility = true;
@@ -58,6 +55,7 @@ class _MapviewCreatorPointCreationState
   Widget build(BuildContext context) {
     setState(() {
       geoMap = ref.read(currentMapNotifierProvider)!;
+      _popupController.showPopupsAlsoFor(_generateMarkersFromGeoMapPoints(geoMap));
     });
 
     return Scaffold(
@@ -138,14 +136,6 @@ class _MapviewCreatorPointCreationState
                         mapHeightFraction = 0.3;
                         _mapController.move(point, 20);
                         allPointMapVisibility = false;
-                        //markers = [marker, ..._generateMarkersFromGeoMapPoints(geoMap)];
-                        //markers = [marker];
-
-
-                        //geoMapPoints.add(marker);
-                        //geoMapPoints.add(ref.read(currentGeoMapPointNotifierProvider));
-                        //popupMarkers = [marker, ..._generateMarkersFromGeoMapPoints(geoMap)];
-        
                       });
 
 
@@ -164,17 +154,46 @@ class _MapviewCreatorPointCreationState
                     ),
                     PopupMarkerLayer(
                         options: PopupMarkerLayerOptions(
-                            markers: _generateMarkersFromGeoMapPoints(geoMap),/*
-                          markers: [
-                            if (currentMarker != null) currentMarker!,
-                            ..._generateMarkersFromGeoMapPoints(geoMap),
-                          ],*/
+                            markers: _generateMarkersFromGeoMapPoints(geoMap),
                           popupController: _popupController,
                           popupDisplayOptions: PopupDisplayOptions(
-                            builder: (BuildContext context, Marker marker) =>
-                                PopUpMarkerGeotext(marker),
+                            //builder: (BuildContext context, Marker marker) =>
+                              //  PopUpMarkerGeotext(marker),
+                            builder: (BuildContext context, Marker marker) {
+                              // Chercher le GeoMapPoint correspondant au marker
+                              final geoMapPoint = geoMap.geoMapPoints.firstWhere(
+                                    (point) => LatLng(point.geoPoint.latitude, point.geoPoint.longitude) == marker.point,
+                                orElse: () => GeoMapPoint( // Provide a default point or empty point
+                                  title: 'Unknown',
+                                  message: 'No message available',
+                                  geoMap: geoMap, // Pass the relevant GeoMap if needed
+                                  geoPoint: GeoPoint(0.0, 0.0), // Default GeoPoint
+                                  creator: ref.read(connectedUserNotifierProvider)!, // Set creator if needed
+                                ), // Gérer le cas où aucun GeoMapPoint n'est trouvé
+                              );
+                              if (geoMapPoint != null) {
+                                return PopUpMarkerGeotext(marker, geoMapPoint);
+                              } else {
+                                return Container(); // Ou une popup par défaut
+                              }
+                            },
                           ),
                         )
+                    ),
+                    CircleLayer(
+                      circles: geoMap.geoMapPoints.map((geoMapPoint) {
+                        return CircleMarker(
+                          point: LatLng(
+                            geoMapPoint.geoPoint.latitude,
+                            geoMapPoint.geoPoint.longitude,
+                          ),
+                          color: geoMapPoint.color.withOpacity(0.3),
+                          borderStrokeWidth: 1,
+                          borderColor: geoMapPoint.color,
+                          useRadiusInMeter: true,
+                          radius: geoMapPoint.radius.toDouble(),
+                        );
+                      }).toList(),
                     ),
                   ],
                 ),

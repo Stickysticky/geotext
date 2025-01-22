@@ -1,15 +1,16 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
+import 'package:geotext/models/geoMapPoint.dart';
 
 class PopUpMarkerGeotext extends StatelessWidget {
   final Marker marker;
+  final GeoMapPoint geoMapPoint;
 
-  const PopUpMarkerGeotext(this.marker, {super.key});
+  const PopUpMarkerGeotext(this.marker, this.geoMapPoint, {super.key});
 
   @override
   Widget build(BuildContext context) {
-    print('ici');
     return Card(
       color: Colors.white,
       child: Padding(
@@ -18,12 +19,11 @@ class PopUpMarkerGeotext extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           children: [
             Text(
-              'Marker Info',
+              geoMapPoint.title,
               style: TextStyle(fontWeight: FontWeight.bold),
             ),
             const SizedBox(height: 5),
-            Text('Latitude: ${marker.point.latitude.toStringAsFixed(5)}'),
-            Text('Longitude: ${marker.point.longitude.toStringAsFixed(5)}'),
+            Text(geoMapPoint.message ?? ''),
           ],
         ),
       ),
