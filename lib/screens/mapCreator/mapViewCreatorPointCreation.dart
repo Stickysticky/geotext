@@ -61,7 +61,7 @@ class _MapviewCreatorPointCreationState
     return Scaffold(
       backgroundColor: Colors.brown.shade50,
       appBar:CustomAppBar(capitalizeFirstLetter(S.of(context).mapCreation)),
-      floatingActionButton: geoMap.geoMapPoints.isNotEmpty ?
+      floatingActionButton: geoMap.geoMapPoints.isNotEmpty  && allPointMapVisibility ?
       AnimatedContainer(
           duration: const Duration(milliseconds: 300),
           padding: EdgeInsets.fromLTRB(0, 0, 0, 10),

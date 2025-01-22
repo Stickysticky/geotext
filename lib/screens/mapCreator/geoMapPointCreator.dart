@@ -54,7 +54,7 @@ class _GeoMapPointCreatorState extends ConsumerState<GeoMapPointCreator> {
   @override
   Widget build(BuildContext context) {
     GeoMapPoint? point = ref.read(currentGeoMapPointNotifierProvider);
-    GeoMap map = ref.read(currentMapNotifierProvider)!;
+    //GeoMap map = ref.read(currentMapNotifierProvider)!;
 
     return Form(
       key: _formKey,
@@ -133,33 +133,56 @@ class _GeoMapPointCreatorState extends ConsumerState<GeoMapPointCreator> {
           const SizedBox(height: 16),
 
           // Bouton de soumission
-          ElevatedButton(
-            onPressed: () {
-              if (_formKey.currentState!.validate()) {
-                _formKey.currentState!.save();
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Padding(
+                padding: const EdgeInsets.fromLTRB(0,0,5,0),
+                child: ElevatedButton(
+                  onPressed: () {
+                    if (_formKey.currentState!.validate()) {
+                      _formKey.currentState!.save();
 
-                widget._point!.title = _title;
-                widget._point!.message = _message;
-                widget._point!.color = _selectedColor;
-                widget._point!.radius = _radius;
+                      widget._point!.title = _title;
+                      widget._point!.message = _message;
+                      widget._point!.color = _selectedColor;
+                      widget._point!.radius = _radius;
 
-                ref.read(currentGeoMapPointNotifierProvider.notifier).setGeoMapPoint(widget._point);
-                ref.read(currentMapNotifierProvider)!.geoMapPoints.add(widget._point!);
+                      ref.read(currentGeoMapPointNotifierProvider.notifier).setGeoMapPoint(widget._point);
+                      ref.read(currentMapNotifierProvider)!.geoMapPoints.add(widget._point!);
 
-                // Fermer ou afficher une confirmation
-                /*ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(content: Text(capitalizeFirstLetter(S.of(context).pointSaved))),
-                );*/
-                //Navigator.pop(context);
-                _toggleVisibility();
-              }
-            },
-            child: Text(
-                capitalizeFirstLetter(S.of(context).validate),
-              style: TextStyle(
-                color: Colors.pink.shade400
+                      // Fermer ou afficher une confirmation
+                      /*ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(content: Text(capitalizeFirstLetter(S.of(context).pointSaved))),
+                      );*/
+                      //Navigator.pop(context);
+                      _toggleVisibility();
+                    }
+                  },
+                  child: Text(
+                      capitalizeFirstLetter(S.of(context).validate),
+                    style: TextStyle(
+                      color: Colors.pink.shade400
+                    ),
+                  ),
+                ),
               ),
-            ),
+              Padding(
+                padding: const EdgeInsets.fromLTRB(5,0,0,0),
+                child: ElevatedButton(
+                  onPressed: () {
+                      _toggleVisibility();
+                  },
+                  child: Text(
+                    capitalizeFirstLetter(S.of(context).cancel),
+                    style: TextStyle(
+                        color: Colors.pink.shade400
+                    ),
+                  ),
+                ),
+              ),
+            ],
           ),
         ],
       ),
