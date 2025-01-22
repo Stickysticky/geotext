@@ -14,7 +14,7 @@ import 'package:latlong2/latlong.dart';
 import '../../commonWidgets/customAppBar.dart';
 import '../../generated/l10n.dart';
 import '../../services/utils.dart';
-import 'mapsWidget/popuUpMarkerGeotext.dart';
+import '../mapsWidget/popuUpMarkerGeotext.dart';
 
 class MapViewCreatorPointCreation extends ConsumerStatefulWidget {
   const MapViewCreatorPointCreation({super.key});
