@@ -7,7 +7,7 @@ part of 'currentGeoMapPointProvider.dart';
 // **************************************************************************
 
 String _$currentGeoMapPointNotifierHash() =>
-    r'96b9cec6529852a44a4318d73d874104e470e687';
+    r'acb35cb1557375f8442585b22adbd2e818fb532e';
 
 /// See also [CurrentGeoMapPointNotifier].
 @ProviderFor(CurrentGeoMapPointNotifier)

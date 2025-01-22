@@ -85,6 +85,34 @@ class GeoMapPoint {
     _creator = value;
   }
 
+  Future<void> saveGeoMapPointToFirestore() async {
+    final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+
+    // Préparer les données à sauvegarder
+    final data = {
+      'title': _title,
+      'message': _message ?? '', // Stocke un message vide si null
+      'geo_map': _firestore.collection('geo_map').doc(_geoMap.id), // Référence au GeoMap
+      'geo_point': {
+        'latitude': _geoPoint.latitude,
+        'longitude': _geoPoint.longitude,
+      },
+      'creator': _firestore.collection('user').doc(_creator.id), // Référence au créateur
+      'color': _color.value, // Sauvegarde la couleur sous forme d'entier
+      'radius': _radius, // Rayon en double
+    };
+
+    // Mise à jour ou création d'un nouveau document
+    if (_id.isNotEmpty) {
+      await _firestore.collection('geo_map_point').doc(_id).set(data);
+    } else {
+      final newDocRef = _firestore.collection('geo_map_point').doc();
+      await newDocRef.set(data);
+      _id = newDocRef.id; // Met à jour l'ID dans l'objet
+    }
+  }
+
+
   static Future<List<GeoMapPoint>> getGeoMapPointsByGeoMap(GeoMap geoMap) async {
     final FirebaseFirestore firestore = FirebaseFirestore.instance;
 
@@ -108,10 +136,8 @@ class GeoMapPoint {
       final data = docSnapshot.data();
 
       // Récupérer le GeoPoint
-      final geoPoint = data['geo_point'] as GeoPoint;
-
+      final geoPoint = GeoPoint(data['geo_point']['latitude'], data['geo_point']['longitude']);
       final DocumentReference<Map<String, dynamic>> creatorRef = data['creator'];
-      print(creatorRef); // Vérifiez que cela correspond bien à la structure attendue
 
 // Récupérez l'ID du document à partir de la référence
       final creatorDoc = await creatorRef.get();
@@ -160,7 +186,7 @@ class GeoMapPoint {
     final data = docSnapshot.data()!;
 
     // Récupérer le GeoPoint
-    final geoPoint = data['geoPoint'] as GeoPoint;
+    final geoPoint = GeoPoint(data['geo_point']['latitude'], data['geo_point']['longitude']);
     final geoLatLng = LatLng(geoPoint.latitude, geoPoint.longitude);
 
     // Récupérer le GeoMap

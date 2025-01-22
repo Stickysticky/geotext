@@ -134,8 +134,8 @@ class GeoMap {
       isPrivate: data['is_private'] ?? true,
       sharedWith: sharedWith,
       initialCenter: LatLng(
-        data['initial_center'].latitude,
-        data['initial_center'].longitude,
+        data['initial_center']['latitude'],
+        data['initial_center']['longitude'],
       ),
     );
   }
@@ -182,14 +182,15 @@ class GeoMap {
     // Ajouter les cartes où l'utilisateur est propriétaire
     for (var map in ownerMapsSnapshot.docs) {
       Map<String,dynamic> dataMap = map.data();
+      print(dataMap['initial_center']);
       GeoMap geoMap = GeoMap(
         id: map.id,
         title: dataMap['title'],
         owner: user,
         isPrivate: dataMap['is_private'],
         initialCenter:  LatLng(
-          dataMap['initial_center'].latitude,
-          dataMap['initial_center'].longitude,
+          dataMap['initial_center']['latitude'],
+          dataMap['initial_center']['longitude'],
         ),
       );
 

@@ -51,6 +51,14 @@ class _MapviewCreatorPointCreationState
     _popupController.showPopupsAlsoFor(_generateMarkersFromGeoMapPoints(geoMap));
   }
 
+  void _savePointsAndMap(){
+    geoMap.saveToFirestore();
+
+    for(GeoMapPoint point in geoMap.geoMapPoints){
+      point.saveGeoMapPointToFirestore();
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     setState(() {
@@ -67,7 +75,12 @@ class _MapviewCreatorPointCreationState
           padding: EdgeInsets.fromLTRB(0, 0, 0, 10),
           child: IconButton(
             onPressed: () {
-              // Ajoutez votre logique pour valider ou enregistrer les données
+              _savePointsAndMap();
+              ref.read(connectedUserNotifierProvider.notifier).addOwnedMap(geoMap);
+
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(content: Text(capitalizeFirstLetter(S.of(context).pointSaved))),
+              );
             },
             icon: const Icon(Icons.check),
             style: IconButton.styleFrom(

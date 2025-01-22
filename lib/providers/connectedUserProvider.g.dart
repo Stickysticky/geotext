@@ -7,7 +7,7 @@ part of 'connectedUserProvider.dart';
 // **************************************************************************
 
 String _$connectedUserNotifierHash() =>
-    r'76d886659747638186f6e1eb55a11e42a9e37029';
+    r'29b0a1646115bf5296ef93148f4145fbf04b27df';
 
 /// See also [ConnectedUserNotifier].
 @ProviderFor(ConnectedUserNotifier)
