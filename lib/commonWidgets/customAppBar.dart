@@ -4,8 +4,9 @@ import '../services/utils.dart';
 
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   final String title;
+  final Icon? icon;
 
-  const CustomAppBar(this.title, {super.key});
+  CustomAppBar({required this.title, this.icon});
 
   @override
   Widget build(BuildContext context) {
@@ -14,13 +15,24 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
       title: Text(
         capitalizeFirstLetter(title),
         style: TextStyle(
-            color: Colors.white,
-            fontSize: 27,
-            fontWeight: FontWeight.bold
+          color: Colors.white,
+          fontSize: 27,
+          fontWeight: FontWeight.bold,
         ),
       ),
       backgroundColor: Colors.brown.shade400,
       elevation: 0.0,
+      actions: icon != null
+          ? [
+        IconButton(
+          icon: icon!,
+          onPressed: () {
+            // Ajouter une action si nécessaire
+            print("Icon clicked");
+          },
+        ),
+      ]
+          : null, // Pas d'icône si icon est null
     );
   }
 

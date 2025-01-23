@@ -68,7 +68,7 @@ class _MapviewCreatorPointCreationState
 
     return Scaffold(
       backgroundColor: Colors.brown.shade50,
-      appBar:CustomAppBar(capitalizeFirstLetter(S.of(context).mapCreation)),
+      appBar:CustomAppBar(title: capitalizeFirstLetter(S.of(context).mapCreation)),
       floatingActionButton: geoMap.geoMapPoints.isNotEmpty  && allPointMapVisibility ?
       AnimatedContainer(
           duration: const Duration(milliseconds: 300),
@@ -77,6 +77,7 @@ class _MapviewCreatorPointCreationState
             onPressed: () {
               _savePointsAndMap();
               ref.read(connectedUserNotifierProvider.notifier).addOwnedMap(geoMap);
+              ref.read(currentMapNotifierProvider.notifier).setGeoMap(null);
 
               ScaffoldMessenger.of(context).showSnackBar(
                 SnackBar(content: Text(capitalizeFirstLetter(S.of(context).pointSaved))),

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_map_marker_popup/flutter_map_marker_popup.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_map/flutter_map.dart';
+import 'package:geotext/models/customUser.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:geotext/commonWidgets/customAppBar.dart';
 import 'package:geotext/models/geoMap.dart';
@@ -75,9 +76,18 @@ class _MapViewState extends ConsumerState<MapView> {
   @override
   Widget build(BuildContext context) {
     final GeoMap geoMap = ref.read(currentMapNotifierProvider)!;
+    CustomUser user = ref.read(connectedUserNotifierProvider)!;
 
     return Scaffold(
-      appBar: CustomAppBar(geoMap.title),
+      appBar: CustomAppBar(
+          title: geoMap.title,
+          icon: user.id == geoMap.owner.id ?
+            const Icon(
+                Icons.edit,
+                color: Colors.white,
+            ) : null
+          ,
+      ),
       body: isLoading
           ? const Center(
         child: CircularProgressIndicator(), // Afficher le loader

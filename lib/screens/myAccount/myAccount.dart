@@ -16,7 +16,7 @@ class MyAccount extends ConsumerWidget {
 
     return Scaffold(
       backgroundColor: Colors.brown.shade50,
-      appBar: CustomAppBar(S.of(context).myAccount),
+      appBar: CustomAppBar(title: S.of(context).myAccount),
       body: Card(
         margin: EdgeInsets.fromLTRB(6.0, 16.0, 6.0, 0),
         child: Column(

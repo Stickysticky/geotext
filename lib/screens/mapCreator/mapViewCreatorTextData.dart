@@ -28,7 +28,7 @@ class _MapViewCreatorTextDataState extends ConsumerState<MapViewCreatorTextData>
 
     return Scaffold(
       backgroundColor: Colors.brown.shade50,
-      appBar: CustomAppBar(capitalizeFirstLetter(S.of(context).mapCreation)),
+      appBar: CustomAppBar(title: capitalizeFirstLetter(S.of(context).mapCreation)),
       floatingActionButton: IconButton(
         onPressed: () async {
           if (_formKey.currentState!.validate()) {

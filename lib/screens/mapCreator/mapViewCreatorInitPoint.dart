@@ -33,7 +33,7 @@ class _MapviewCreatorInitPointState extends ConsumerState<MapViewCreatorInitPoin
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.brown.shade50,
-      appBar: CustomAppBar(capitalizeFirstLetter(S.of(context).mapCreation)),
+      appBar: CustomAppBar(title: capitalizeFirstLetter(S.of(context).mapCreation)),
       floatingActionButton: Container(
         margin: EdgeInsets.fromLTRB(0, 0, 0, 10),
         child: IconButton(

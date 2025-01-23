@@ -21,7 +21,7 @@ class MyMaps extends ConsumerWidget {
 
     return Scaffold(
       backgroundColor: Colors.brown.shade50,
-      appBar: CustomAppBar(S.of(context).myMaps),
+      appBar: CustomAppBar(title: S.of(context).myMaps),
       floatingActionButton: IconButton(
         onPressed: () {
           Navigator.pushNamed(context, '/map_creation');
