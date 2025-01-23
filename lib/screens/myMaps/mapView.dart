@@ -23,12 +23,14 @@ class _MapViewState extends ConsumerState<MapView> {
   List<Marker> markers = [];
   bool isLoading = true;
   final PopupController _popupController = PopupController();
+  GeoMapPoint? _selectedGeoMapPoint;
 
   @override
   void initState() {
     super.initState();
     _loadMarkers();
   }
+
 
   Future<void> _loadMarkers() async {
     final GeoMap geoMap = ref.read(currentMapNotifierProvider)!;
@@ -40,10 +42,27 @@ class _MapViewState extends ConsumerState<MapView> {
           .map(
             (point) => Marker(
           point: LatLng(point.geoPoint.latitude, point.geoPoint.longitude),
-          child: Icon(
-            Icons.location_on,
-            color: point.color,
-            size: 40,
+              width: 40, // Taille du marqueur
+              height: 40,
+          child: GestureDetector(
+            onTap: () {
+              setState(() {
+                if(_selectedGeoMapPoint == null){
+                  _selectedGeoMapPoint = point;
+                  _popupController.showPopupsAlsoFor(_generateMarkerFromGeoMapPoint(_selectedGeoMapPoint!));
+                } else {
+                  _selectedGeoMapPoint = null;
+                  _popupController.hideAllPopups();
+                }
+              });
+
+
+            },
+            child: Icon(
+              Icons.location_on,
+              color: point.color,
+              size: 40,
+            ),
           ),
         ),
       )
@@ -56,7 +75,6 @@ class _MapViewState extends ConsumerState<MapView> {
   @override
   Widget build(BuildContext context) {
     final GeoMap geoMap = ref.read(currentMapNotifierProvider)!;
-    _popupController.showPopupsAlsoFor(_generateMarkersFromGeoMapPoints(geoMap));
 
     return Scaffold(
       appBar: CustomAppBar(geoMap.title),
@@ -65,68 +83,72 @@ class _MapViewState extends ConsumerState<MapView> {
         child: CircularProgressIndicator(), // Afficher le loader
       )
           : FlutterMap(
-          options: MapOptions(
-            initialCenter: LatLng(
-              geoMap.initialCenter.latitude,
-              geoMap.initialCenter.longitude,
-            ),
-            initialZoom: 13,
+        options: MapOptions(
+          initialCenter: LatLng(
+            geoMap.initialCenter.latitude,
+            geoMap.initialCenter.longitude,
           ),
-          children: [
-            TileLayer(
-              urlTemplate: "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
-              subdomains: ['a', 'b', 'c'],
-            ),
-            MarkerLayer(
-              markers: markers,
-            ),
+          initialZoom: 13,
+        ),
+        children: [
+          TileLayer(
+            urlTemplate: "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
+            subdomains: ['a', 'b', 'c'],
+          ),
+          // Utiliser une seule source pour les marqueurs
+          MarkerLayer(
+            markers: markers,
+          ),
+          if (_selectedGeoMapPoint != null) // Affiche le cercle uniquement si un point est sélectionné
             CircleLayer(
-              circles: geoMap.geoMapPoints.map((geoMapPoint) {
-                return CircleMarker(
+              circles: [
+                CircleMarker(
                   point: LatLng(
-                    geoMapPoint.geoPoint.latitude,
-                    geoMapPoint.geoPoint.longitude,
+                    _selectedGeoMapPoint!.geoPoint.latitude,
+                    _selectedGeoMapPoint!.geoPoint.longitude,
                   ),
-                  color: geoMapPoint.color.withOpacity(0.3),
+                  color: _selectedGeoMapPoint!.color.withOpacity(0.3),
                   borderStrokeWidth: 1,
-                  borderColor: geoMapPoint.color,
+                  borderColor: _selectedGeoMapPoint!.color,
                   useRadiusInMeter: true,
-                  radius: geoMapPoint.radius.toDouble(),
-                );
-              }).toList(),
+                  radius: _selectedGeoMapPoint!.radius.toDouble(),
+                ),
+              ],
             ),
-            PopupMarkerLayer(
-                options: PopupMarkerLayerOptions(
-                  markers: _generateMarkersFromGeoMapPoints(geoMap),
-                  popupController: _popupController,
-                  popupDisplayOptions: PopupDisplayOptions(
-                    //builder: (BuildContext context, Marker marker) =>
-                    //  PopUpMarkerGeotext(marker),
-                    builder: (BuildContext context, Marker marker) {
-                      // Chercher le GeoMapPoint correspondant au marker
-                      final geoMapPoint = geoMap.geoMapPoints.firstWhere(
-                            (point) => LatLng(point.geoPoint.latitude, point.geoPoint.longitude) == marker.point,
-                        orElse: () => GeoMapPoint( // Provide a default point or empty point
-                          title: 'Unknown',
-                          message: 'No message available',
-                          geoMap: geoMap, // Pass the relevant GeoMap if needed
-                          geoPoint: GeoPoint(0.0, 0.0), // Default GeoPoint
-                          creator: ref.read(connectedUserNotifierProvider)!, // Set creator if needed
-                        ), // Gérer le cas où aucun GeoMapPoint n'est trouvé
-                      );
-                      if (geoMapPoint != null) {
-                        return PopUpMarkerGeotext(marker, geoMapPoint);
-                      } else {
-                        return Container(); // Ou une popup par défaut
-                      }
-                    },
-                  ),
-                )
+          PopupMarkerLayer(
+            options: PopupMarkerLayerOptions(
+              markers: markers, // Réutilise la même liste
+              popupController: _popupController,
+              popupDisplayOptions: PopupDisplayOptions(
+                builder: (BuildContext context, Marker marker) {
+                  final geoMapPoint = geoMap.geoMapPoints.firstWhere(
+                        (point) =>
+                    LatLng(point.geoPoint.latitude,
+                        point.geoPoint.longitude) ==
+                        marker.point,
+                    orElse: () => GeoMapPoint(
+                      title: 'Unknown',
+                      message: 'No message available',
+                      geoMap: geoMap,
+                      geoPoint: GeoPoint(0.0, 0.0),
+                      creator: ref
+                          .read(connectedUserNotifierProvider)!, // Développez si nécessaire
+                    ),
+                  );
+                  if (geoMapPoint != null) {
+                    return PopUpMarkerGeotext(marker, geoMapPoint);
+                  } else {
+                    return Container(); // Ou une popup par défaut
+                  }
+                },
+              ),
             ),
-          ],
+          ),
+        ],
       ),
     );
   }
+
 
   List<Marker> _generateMarkersFromGeoMapPoints(GeoMap geoMap) {
     // Convertit chaque GeoMapPoint en Marker
@@ -140,6 +162,19 @@ class _MapViewState extends ConsumerState<MapView> {
         ),
       );
     }).toList();
+  }
+
+  List<Marker> _generateMarkerFromGeoMapPoint(GeoMapPoint point) {
+    return [
+      Marker(
+        point: LatLng(point.geoPoint.latitude, point.geoPoint.longitude),
+        child: Icon(
+          Icons.location_on,
+          color: point.color,
+          size: 40,
+        ),
+      )
+    ];
   }
 
 }
