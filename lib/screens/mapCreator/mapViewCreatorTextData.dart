@@ -24,7 +24,14 @@ class _MapViewCreatorTextDataState extends ConsumerState<MapViewCreatorTextData>
 
   @override
   Widget build(BuildContext context) {
-    CustomUser currentUser = ref.watch(connectedUserNotifierProvider)!;
+    GeoMap? geoMap = ref.watch(currentMapNotifierProvider);
+    print(geoMap);
+    if (geoMap != null) {
+      _title = geoMap.title;
+      _isPrivate = geoMap.isPrivate;
+    }
+
+    CustomUser currentUser = ref.read(connectedUserNotifierProvider)!;
 
     return Scaffold(
       backgroundColor: Colors.brown.shade50,
@@ -55,20 +62,16 @@ class _MapViewCreatorTextDataState extends ConsumerState<MapViewCreatorTextData>
                 decoration: InputDecoration(
                   labelText: capitalizeFirstLetter(S.of(context).title),
                   labelStyle: TextStyle(
-                    //color: Colors.pink.shade400,
                     fontSize: 30,
-                    //fontWeight: FontWeight.bold,
                   ),
                   border: const OutlineInputBorder(),
                   enabledBorder: OutlineInputBorder(
                     borderSide: BorderSide(
-                      //color: Colors.grey.shade400,
                       width: 1.0,
                     ),
                   ),
                   focusedBorder: OutlineInputBorder(
                     borderSide: BorderSide(
-                      //color: Colors.pink.shade400,
                       width: 1.0,
                     ),
                   ),
@@ -78,6 +81,7 @@ class _MapViewCreatorTextDataState extends ConsumerState<MapViewCreatorTextData>
                     fontWeight: FontWeight.bold, // Éventuellement, mettre en gras
                   ),
                 ),
+                initialValue: _title,
                 validator: (value) {
                   if (value == null || value.isEmpty) {
                     return capitalizeFirstLetter(S.of(context).titleRequired);
@@ -99,9 +103,7 @@ class _MapViewCreatorTextDataState extends ConsumerState<MapViewCreatorTextData>
                   Text(
                     capitalizeFirstLetter(S.of(context).isPrivate),
                     style: TextStyle(
-                      //color: Colors.pink.shade400,
                         fontSize: 25,
-                      //fontWeight: FontWeight.bold
                     ),
 
                   ),
@@ -117,22 +119,6 @@ class _MapViewCreatorTextDataState extends ConsumerState<MapViewCreatorTextData>
                 ],
               ),
               const SizedBox(height: 16),
-
-              /*IconButton(
-                onPressed: () async {
-                  if (_formKey.currentState!.validate()) {
-                    _formKey.currentState!.save(); // Sauvegarder les valeurs du formulaire
-                    await _createGeoMap(currentUser); // Appeler la fonction de création
-                  }
-                },
-                icon: const Icon(Icons.arrow_right), // Icône "Valider"
-                style: IconButton.styleFrom(
-                  backgroundColor: Colors.pink.shade400,
-                ),
-                color: Colors.white,
-                iconSize: 40,
-              ),*/
-
             ],
           ),
         ),
@@ -148,8 +134,6 @@ class _MapViewCreatorTextDataState extends ConsumerState<MapViewCreatorTextData>
     );
 
     ref.watch(currentMapNotifierProvider.notifier).setGeoMap(map);
-
     Navigator.pushNamed(context, '/map_creator_init_point');
-    //Navigator.pop(context); // Retourner à l'écran précédent après création
   }
 }

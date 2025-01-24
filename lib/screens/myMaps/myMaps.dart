@@ -6,6 +6,7 @@ import 'package:geotext/models/geoMap.dart';
 import 'package:geotext/providers/connectedUserProvider.dart';
 
 import '../../generated/l10n.dart';
+import '../../providers/currentMapProvider.dart';
 import 'mapCard.dart';
 
 class MyMaps extends ConsumerWidget {
@@ -13,8 +14,9 @@ class MyMaps extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    List<GeoMap> myMaps = ref.watch(connectedUserNotifierProvider)!.geoMapsOwner;
-    List<GeoMap> mySharedMaps = ref.watch(connectedUserNotifierProvider)!.geoMapsShared;
+    ref.read(currentMapNotifierProvider.notifier).setGeoMap(null);
+    List<GeoMap> myMaps = ref.read(connectedUserNotifierProvider)!.geoMapsOwner;
+    List<GeoMap> mySharedMaps = ref.read(connectedUserNotifierProvider)!.geoMapsShared;
 
     List<GeoMap> combinedMaps = [...myMaps, ...mySharedMaps];
     combinedMaps.sort((a, b) => a.title.toLowerCase().compareTo(b.title.toLowerCase()));

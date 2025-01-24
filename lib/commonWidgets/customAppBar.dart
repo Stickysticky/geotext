@@ -5,8 +5,9 @@ import '../services/utils.dart';
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   final String title;
   final Icon? icon;
+  final Function? pressedIcon;
 
-  CustomAppBar({required this.title, this.icon});
+  CustomAppBar({required this.title, this.icon, this.pressedIcon});
 
   @override
   Widget build(BuildContext context) {
@@ -27,8 +28,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
         IconButton(
           icon: icon!,
           onPressed: () {
-            // Ajouter une action si nécessaire
-            print("Icon clicked");
+            pressedIcon!();
           },
         ),
       ]

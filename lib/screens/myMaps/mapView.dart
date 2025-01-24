@@ -73,6 +73,11 @@ class _MapViewState extends ConsumerState<MapView> {
     });
   }
 
+  void _toModificationMap () {
+    Navigator.pushNamed(context, '/map_creation');
+
+  }
+
   @override
   Widget build(BuildContext context) {
     final GeoMap geoMap = ref.read(currentMapNotifierProvider)!;
@@ -84,9 +89,10 @@ class _MapViewState extends ConsumerState<MapView> {
           icon: user.id == geoMap.owner.id ?
             const Icon(
                 Icons.edit,
-                color: Colors.white,
+                color: Colors.white
             ) : null
           ,
+        pressedIcon : user.id == geoMap.owner.id ? _toModificationMap : null
       ),
       body: isLoading
           ? const Center(
