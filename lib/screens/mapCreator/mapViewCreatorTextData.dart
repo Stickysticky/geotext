@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:geotext/providers/currentMapProvider.dart';
+import 'package:latlong2/latlong.dart';
 
 import '../../commonWidgets/customAppBar.dart';
 import '../../models/customUser.dart';
@@ -140,10 +141,11 @@ class _MapViewCreatorTextDataState extends ConsumerState<MapViewCreatorTextData>
       title: _title!,
       owner: currentUser,
       isPrivate: _isPrivate,
+      initialCenter: !isCreation ? initialGeoMap.initialCenter : LatLng(48.8566, 2.3522),
     );
 
     ref.watch(currentMapNotifierProvider.notifier).setGeoMap(geoMap);
 
-    Navigator.pushNamed(context, '/map_creator_init_point', arguments: {isCreation: isCreation});
+    Navigator.pushNamed(context, '/map_creator_init_point', arguments: {'isCreation': isCreation});
   }
 }
