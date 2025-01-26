@@ -22,7 +22,7 @@ class MapCard extends ConsumerWidget {
     return InkWell(
       onTap: () {
         ref.watch(currentMapNotifierProvider.notifier).setGeoMap(map);
-        Navigator.pushNamed(context, '/map_view');
+        Navigator.pushNamed(context, '/map_view' , arguments: map);
       },
       child: Card(
         margin: EdgeInsets.fromLTRB(16.0, 26.0, 16.0, 0),

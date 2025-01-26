@@ -499,6 +499,16 @@ class S {
       args: [],
     );
   }
+
+  /// `edit map`
+  String get mapModification {
+    return Intl.message(
+      'edit map',
+      name: 'mapModification',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

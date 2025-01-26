@@ -48,6 +48,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "logout": MessageLookupByLibrary.simpleMessage("déconnexion"),
         "mapCreation":
             MessageLookupByLibrary.simpleMessage("création de carte"),
+        "mapModification":
+            MessageLookupByLibrary.simpleMessage("modification de la carte"),
         "mapSaved": MessageLookupByLibrary.simpleMessage("carte sauvegardé !"),
         "message": MessageLookupByLibrary.simpleMessage("message"),
         "myAccount": MessageLookupByLibrary.simpleMessage("mon compte"),

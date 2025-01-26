@@ -46,6 +46,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "isPrivate": MessageLookupByLibrary.simpleMessage("put in private"),
         "logout": MessageLookupByLibrary.simpleMessage("logout"),
         "mapCreation": MessageLookupByLibrary.simpleMessage("map creation"),
+        "mapModification": MessageLookupByLibrary.simpleMessage("edit map"),
         "mapSaved": MessageLookupByLibrary.simpleMessage("map sauvegardé !"),
         "message": MessageLookupByLibrary.simpleMessage("message"),
         "myAccount": MessageLookupByLibrary.simpleMessage("my account"),

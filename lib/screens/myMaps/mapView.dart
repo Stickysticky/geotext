@@ -74,8 +74,15 @@ class _MapViewState extends ConsumerState<MapView> {
     });
   }
 
-  void _toModificationMap () {
-    Navigator.pushNamed(context, '/map_creation');
+  void _toModificationMap (GeoMap map) {
+    Navigator.pushNamed(
+      context,
+      '/map_creation',
+      arguments: {
+        'isCreation': false,
+        'geoMap': map
+      }
+    );
 
   }
 
@@ -91,7 +98,8 @@ class _MapViewState extends ConsumerState<MapView> {
 
   @override
   Widget build(BuildContext context) {
-    final GeoMap geoMap = ref.read(currentMapNotifierProvider)!;
+    //final GeoMap geoMap = ref.read(currentMapNotifierProvider)!;
+    final geoMap = ModalRoute.of(context)?.settings.arguments as GeoMap;
     CustomUser user = ref.read(connectedUserNotifierProvider)!;
 
     return Scaffold(
@@ -103,7 +111,9 @@ class _MapViewState extends ConsumerState<MapView> {
                 color: Colors.white
             ) : null
           ,
-        pressedIcon : user.id == geoMap.owner.id ? _toModificationMap : null
+          pressedIcon: user.id == geoMap.owner.id
+              ? () => _toModificationMap(geoMap)
+              : null
       ),
       body: isLoading
           ? const Center(

@@ -24,8 +24,14 @@ class _MapViewCreatorTextDataState extends ConsumerState<MapViewCreatorTextData>
 
   @override
   Widget build(BuildContext context) {
-    GeoMap? geoMap = ref.watch(currentMapNotifierProvider);
+    final args = ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>?;
+    final isCreation = args?['isCreation'] ?? true;
+
+    //GeoMap? geoMap = ref.watch(currentMapNotifierProvider);
+
+    GeoMap? geoMap = args?['geoMap'];
     print(geoMap);
+
     if (geoMap != null) {
       _title = geoMap.title;
       _isPrivate = geoMap.isPrivate;
@@ -35,12 +41,12 @@ class _MapViewCreatorTextDataState extends ConsumerState<MapViewCreatorTextData>
 
     return Scaffold(
       backgroundColor: Colors.brown.shade50,
-      appBar: CustomAppBar(title: capitalizeFirstLetter(S.of(context).mapCreation)),
+      appBar: CustomAppBar(title: capitalizeFirstLetter(isCreation ? S.of(context).mapCreation : S.of(context).mapModification)),
       floatingActionButton: IconButton(
         onPressed: () async {
           if (_formKey.currentState!.validate()) {
             _formKey.currentState!.save(); // Sauvegarder les valeurs du formulaire
-            await _createGeoMap(currentUser); // Appeler la fonction de création
+            await _createGeoMap(currentUser, geoMap); // Appeler la fonction de création
           }
         },
         icon: const Icon(Icons.arrow_right), // Icône "Valider"
@@ -126,14 +132,18 @@ class _MapViewCreatorTextDataState extends ConsumerState<MapViewCreatorTextData>
     );
   }
 
-  Future<void> _createGeoMap(CustomUser currentUser) async {
-    final map = GeoMap(
+  Future<void> _createGeoMap(CustomUser currentUser, [GeoMap? initialGeoMap]) async {
+    bool isCreation = initialGeoMap == null;
+
+    GeoMap geoMap = GeoMap(
+      id: !isCreation ? initialGeoMap.id : null,
       title: _title!,
       owner: currentUser,
       isPrivate: _isPrivate,
     );
 
-    ref.watch(currentMapNotifierProvider.notifier).setGeoMap(map);
-    Navigator.pushNamed(context, '/map_creator_init_point');
+    ref.watch(currentMapNotifierProvider.notifier).setGeoMap(geoMap);
+
+    Navigator.pushNamed(context, '/map_creator_init_point', arguments: {isCreation: isCreation});
   }
 }
