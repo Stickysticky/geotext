@@ -23,7 +23,6 @@ class _MapviewCreatorInitPointState extends ConsumerState<MapViewCreatorInitPoin
   final MapController _mapController = MapController(); // Ajout du MapController
 
   void _recenterMap(GeoMap geoMap) {
-    // Fonction pour recentrer la carte
     _mapController.moveAndRotate(
       LatLng(geoMap.initialCenter.latitude, geoMap.initialCenter.longitude),
       13, // Zoom initial
