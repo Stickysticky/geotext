@@ -224,21 +224,23 @@ class _MapviewCreatorPointCreationState
                             );
                           }).toList(),
                         ),
+                        if (allPointMapVisibility)
+                          Positioned(
+                            bottom: 20, // Espace du bas
+                            right: 5, // Espace de la droite
+                            child: ElevatedButton(
+                              onPressed: () => _recenterMap(geoMap), // Appelle la fonction de recentrage
+                              child: const Icon(Icons.my_location), // Icône de recentrage
+                              style: ElevatedButton.styleFrom(
+                                shape: CircleBorder(), // Forme ronde comme le FloatingActionButton
+                                backgroundColor: Colors.white, // Couleur d'arrière-plan (comme le backgroundColor de FloatingActionButton)
+                                foregroundColor: Colors.brown.shade400, // Couleur du premier plan (comme le foregroundColor de FloatingActionButton)
+                                padding: EdgeInsets.all(16), // Donne un padding pour augmenter la taille du bouton
+                              ),
+                            ),
+                          )
+
                       ],
-                    ),
-                    Positioned(
-                      bottom: 20, // Espace du bas
-                      right: 5, // Espace de la droite
-                      child: ElevatedButton(
-                        onPressed: () => _recenterMap(geoMap), // Appelle la fonction de recentrage
-                        child: const Icon(Icons.my_location), // Icône de recentrage
-                        style: ElevatedButton.styleFrom(
-                          shape: CircleBorder(), // Forme ronde comme le FloatingActionButton
-                          backgroundColor: Colors.white, // Couleur d'arrière-plan (comme le backgroundColor de FloatingActionButton)
-                          foregroundColor: Colors.brown.shade400, // Couleur du premier plan (comme le foregroundColor de FloatingActionButton)
-                          padding: EdgeInsets.all(16), // Donne un padding pour augmenter la taille du bouton
-                        ),
-                      ),
                     ),
                   ],
                 ),
