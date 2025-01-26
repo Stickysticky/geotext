@@ -26,7 +26,6 @@ class MapViewCreatorPointCreation extends ConsumerStatefulWidget {
 
 class _MapviewCreatorPointCreationState
     extends ConsumerState<MapViewCreatorPointCreation> {
-  //List<Marker> geoMapPoints = [];
   late final MapController _mapController;
   final PopupController _popupController = PopupController();
   double mapHeightFraction = 1.0;
@@ -62,9 +61,10 @@ class _MapviewCreatorPointCreationState
   @override
   Widget build(BuildContext context) {
     setState(() {
-      geoMap = ref.read(currentMapNotifierProvider)!;
+      geoMap = ref.watch(currentMapNotifierProvider)!;
       _popupController.showPopupsAlsoFor(_generateMarkersFromGeoMapPoints(geoMap));
     });
+
 
     return Scaffold(
       backgroundColor: Colors.brown.shade50,

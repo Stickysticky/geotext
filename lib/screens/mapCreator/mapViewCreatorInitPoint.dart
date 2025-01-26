@@ -18,7 +18,7 @@ class MapViewCreatorInitPoint extends ConsumerStatefulWidget {
 
 class _MapviewCreatorInitPointState extends ConsumerState<MapViewCreatorInitPoint> {
   // Point initial de la carte : Paris
-  LatLng _center = LatLng(48.8566, 2.3522); // Coordonnées de Paris
+  LatLng? _center; // Coordonnées de Paris
   List<Marker> markers = [];
   final MapController _mapController = MapController(); // Ajout du MapController
 
@@ -38,12 +38,16 @@ class _MapviewCreatorInitPointState extends ConsumerState<MapViewCreatorInitPoin
     GeoMap geoMap = ref.watch(currentMapNotifierProvider)!;
 
     setState(() {
-      _center = geoMap.initialCenter;
+
+      if(_center == null){
+        _center = geoMap.initialCenter;
+      }
+
 
       if(markers.isEmpty){
         markers = [
           Marker(
-            point: _center ,
+            point: _center!,
             child: Icon(
               Icons.location_on,
               color: Colors.pink.shade400,
@@ -63,8 +67,7 @@ class _MapviewCreatorInitPointState extends ConsumerState<MapViewCreatorInitPoin
         margin: EdgeInsets.fromLTRB(0, 0, 0, 10),
         child: IconButton(
           onPressed: () {
-            //ref.watch(currentMapNotifierProvider.notifier).updateCenterMap(_center);
-            geoMap.initialCenter = _center;
+            geoMap.initialCenter = _center!;
             Navigator.pushNamed(context, '/map_creator_point_creation', arguments: {'isCreation': isCreation});
           },
           icon: const Icon(Icons.arrow_right),
@@ -100,7 +103,7 @@ class _MapviewCreatorInitPointState extends ConsumerState<MapViewCreatorInitPoin
                   FlutterMap(
                     mapController: _mapController,
                     options: MapOptions(
-                      initialCenter: _center,
+                      initialCenter: _center!,
                       onTap: (tapPosition, point) {
                         // Lorsque l'utilisateur clique sur la carte, ajoutez un marqueur
                         setState(() {
