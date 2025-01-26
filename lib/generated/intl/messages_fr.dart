@@ -20,12 +20,20 @@ typedef String MessageIfAbsent(String messageStr, List<dynamic> args);
 class MessageLookup extends MessageLookupByLibrary {
   String get localeName => 'fr';
 
+  static String m0(mapTitle) =>
+      "Vous allez supprimer la carte ${mapTitle} et les informations qui lui sont liées. Voulez-vous continuer?";
+
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
         "appTitle": MessageLookupByLibrary.simpleMessage("geotext"),
         "cancel": MessageLookupByLibrary.simpleMessage("annuler"),
         "close": MessageLookupByLibrary.simpleMessage("Fermer"),
         "color": MessageLookupByLibrary.simpleMessage("couleur"),
+        "delete": MessageLookupByLibrary.simpleMessage("supprimer"),
+        "deleteMap":
+            MessageLookupByLibrary.simpleMessage("suppression de la carte"),
+        "deleteMapConfirmation": m0,
+        "deletedMap": MessageLookupByLibrary.simpleMessage("carte supprimée"),
         "email": MessageLookupByLibrary.simpleMessage("email"),
         "enterEmail": MessageLookupByLibrary.simpleMessage("entrez un email"),
         "enterPassword": MessageLookupByLibrary.simpleMessage(
@@ -40,6 +48,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "logout": MessageLookupByLibrary.simpleMessage("déconnexion"),
         "mapCreation":
             MessageLookupByLibrary.simpleMessage("création de carte"),
+        "mapSaved": MessageLookupByLibrary.simpleMessage("carte sauvegardé !"),
         "message": MessageLookupByLibrary.simpleMessage("message"),
         "myAccount": MessageLookupByLibrary.simpleMessage("mon compte"),
         "myFriends": MessageLookupByLibrary.simpleMessage("mes amis"),

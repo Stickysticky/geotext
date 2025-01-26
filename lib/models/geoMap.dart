@@ -224,4 +224,31 @@ class GeoMap {
 
     return maps;
   }
+
+  Future<void> deleteGeoMapAndPoints() async {
+    try {
+      final firestore = FirebaseFirestore.instance;
+
+      // Créer une référence au document GeoMap
+      final geoMapRef = firestore.collection('geo_map').doc(id);
+
+      // Étape 1 : Supprimer les geo_map_points associés
+      final pointsQuery = await firestore
+          .collection('geo_map_point') // Collection des points
+          .where('geo_map', isEqualTo: geoMapRef) // Vérifie que le champ 'map' pointe vers la référence
+          .get();
+
+      for (var point in pointsQuery.docs) {
+        await point.reference.delete(); // Supprime chaque point
+      }
+
+      // Étape 2 : Supprimer le document GeoMap
+      await geoMapRef.delete();
+
+      print("GeoMap et ses points associés supprimés avec succès.");
+    } catch (e) {
+      print("Erreur lors de la suppression : $e");
+    }
+  }
+
 }

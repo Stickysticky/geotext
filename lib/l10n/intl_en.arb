@@ -39,5 +39,19 @@
     "pointSaved": "point saved !",
     "validate": "validate",
     "selectAColor": "select a color",
-    "close": "fermer"
+    "close": "close",
+    "mapSaved": "map sauvegardé !",
+    "deleteMapConfirmation": "You are about to delete the map {mapTitle} and all its related data. Do you want to continue?",
+      "@deleteMapConfirmation": {
+        "description": "Confirmation message to delete a map",
+        "placeholders": {
+          "mapTitle": {
+            "type": "String",
+            "example": "My Map"
+          }
+        }
+      },
+    "deleteMap": "removing the map",
+    "deletedMap": "map deleted",
+    "delete": "delete"
 }

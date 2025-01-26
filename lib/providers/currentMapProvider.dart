@@ -16,6 +16,7 @@ class CurrentMapNotifier extends _$CurrentMapNotifier {
 
   Future<void> setGeoMap (GeoMap? map) async {
     state = map;
+    print(map);
     if(map is GeoMap){
       map.geoMapPoints = await GeoMapPoint.getGeoMapPointsByGeoMap(map);
     }

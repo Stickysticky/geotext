@@ -14,7 +14,6 @@ class MyMaps extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    ref.read(currentMapNotifierProvider.notifier).setGeoMap(null);
     List<GeoMap> myMaps = ref.read(connectedUserNotifierProvider)!.geoMapsOwner;
     List<GeoMap> mySharedMaps = ref.read(connectedUserNotifierProvider)!.geoMapsShared;
 
@@ -26,6 +25,7 @@ class MyMaps extends ConsumerWidget {
       appBar: CustomAppBar(title: S.of(context).myMaps),
       floatingActionButton: IconButton(
         onPressed: () {
+          ref.read(currentMapNotifierProvider.notifier).setGeoMap(null);
           Navigator.pushNamed(context, '/map_creation');
         },
         icon: Icon(Icons.plus_one),

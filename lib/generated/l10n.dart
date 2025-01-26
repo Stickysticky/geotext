@@ -430,11 +430,61 @@ class S {
     );
   }
 
-  /// `fermer`
+  /// `close`
   String get close {
     return Intl.message(
-      'fermer',
+      'close',
       name: 'close',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `map sauvegardé !`
+  String get mapSaved {
+    return Intl.message(
+      'map sauvegardé !',
+      name: 'mapSaved',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `You are about to delete the map {mapTitle} and all its related data. Do you want to continue?`
+  String deleteMapConfirmation(String mapTitle) {
+    return Intl.message(
+      'You are about to delete the map $mapTitle and all its related data. Do you want to continue?',
+      name: 'deleteMapConfirmation',
+      desc: 'Confirmation message to delete a map',
+      args: [mapTitle],
+    );
+  }
+
+  /// `removing the map`
+  String get deleteMap {
+    return Intl.message(
+      'removing the map',
+      name: 'deleteMap',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `map deleted`
+  String get deletedMap {
+    return Intl.message(
+      'map deleted',
+      name: 'deletedMap',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `delete`
+  String get delete {
+    return Intl.message(
+      'delete',
+      name: 'delete',
       desc: '',
       args: [],
     );

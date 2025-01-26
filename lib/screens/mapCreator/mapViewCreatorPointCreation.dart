@@ -80,7 +80,7 @@ class _MapviewCreatorPointCreationState
               ref.read(currentMapNotifierProvider.notifier).setGeoMap(null);
 
               ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(content: Text(capitalizeFirstLetter(S.of(context).pointSaved))),
+                SnackBar(content: Text(capitalizeFirstLetter(S.of(context).mapSaved))),
               );
             },
             icon: const Icon(Icons.check),

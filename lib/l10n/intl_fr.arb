@@ -39,5 +39,19 @@
     "pointSaved": "point sauvegardé !",
     "validate": "valider",
     "selectAColor": "Sélectionnez une couleur",
-    "close": "Fermer"
+    "close": "Fermer",
+    "mapSaved": "carte sauvegardé !",
+    "deleteMapConfirmation": "Vous allez supprimer la carte {mapTitle} et les informations qui lui sont liées. Voulez-vous continuer?",
+      "@deleteMapConfirmation": {
+        "description": "Message de confirmation pour supprimer une carte",
+        "placeholders": {
+          "mapTitle": {
+            "type": "String",
+            "example": "Ma Carte"
+          }
+        }
+      },
+    "deleteMap": "suppression de la carte",
+    "deletedMap": "carte supprimée",
+    "delete": "supprimer"
 }
