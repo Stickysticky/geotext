@@ -25,6 +25,7 @@ class _MapViewState extends ConsumerState<MapView> {
   bool isLoading = true;
   final PopupController _popupController = PopupController();
   GeoMapPoint? _selectedGeoMapPoint;
+  final MapController _mapController = MapController(); // Ajout du MapController
 
   @override
   void initState() {
@@ -78,6 +79,16 @@ class _MapViewState extends ConsumerState<MapView> {
 
   }
 
+  void _recenterMap(GeoMap geoMap) {
+    // Fonction pour recentrer la carte
+    _mapController.moveAndRotate(
+      LatLng(geoMap.initialCenter.latitude, geoMap.initialCenter.longitude),
+      13, // Zoom initial
+      0.0, // Rotation pour mettre le nord en haut
+    );
+  }
+
+
   @override
   Widget build(BuildContext context) {
     final GeoMap geoMap = ref.read(currentMapNotifierProvider)!;
@@ -99,6 +110,7 @@ class _MapViewState extends ConsumerState<MapView> {
         child: CircularProgressIndicator(), // Afficher le loader
       )
           : FlutterMap(
+        mapController: _mapController,
         options: MapOptions(
           initialCenter: LatLng(
             geoMap.initialCenter.latitude,
@@ -161,6 +173,12 @@ class _MapViewState extends ConsumerState<MapView> {
             ),
           ),
         ],
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () => _recenterMap(geoMap), // Appelle la fonction de recentrage
+        child: const Icon(Icons.my_location), // Icône de recentrage
+        foregroundColor: Colors.brown.shade400,
+        backgroundColor: Colors.white,
       ),
     );
   }

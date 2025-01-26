@@ -53,5 +53,6 @@
       },
     "deleteMap": "suppression de la carte",
     "deletedMap": "carte supprimée",
-    "delete": "supprimer"
+    "delete": "supprimer",
+    "searchMap": "chercher des carte"
 }

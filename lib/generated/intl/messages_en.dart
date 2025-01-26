@@ -70,6 +70,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "registerWeakPassword": MessageLookupByLibrary.simpleMessage(
             "your password is to weak. Please use a strong password."),
         "save": MessageLookupByLibrary.simpleMessage("save"),
+        "searchMap": MessageLookupByLibrary.simpleMessage("search for maps"),
         "selectAColor": MessageLookupByLibrary.simpleMessage("select a color"),
         "signIn": MessageLookupByLibrary.simpleMessage("sign in"),
         "signInError": MessageLookupByLibrary.simpleMessage(

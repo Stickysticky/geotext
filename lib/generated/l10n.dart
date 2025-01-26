@@ -489,6 +489,16 @@ class S {
       args: [],
     );
   }
+
+  /// `search for maps`
+  String get searchMap {
+    return Intl.message(
+      'search for maps',
+      name: 'searchMap',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

@@ -82,6 +82,7 @@ class _MapviewCreatorPointCreationState
               ScaffoldMessenger.of(context).showSnackBar(
                 SnackBar(content: Text(capitalizeFirstLetter(S.of(context).mapSaved))),
               );
+              Navigator.pushNamed(context, '/my_maps');
             },
             icon: const Icon(Icons.check),
             style: IconButton.styleFrom(

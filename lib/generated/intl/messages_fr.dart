@@ -73,6 +73,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "registerWeakPassword": MessageLookupByLibrary.simpleMessage(
             "votre mot de passe n\'est pas assez sécurisé. Veuillez entrer un autre mot de passe."),
         "save": MessageLookupByLibrary.simpleMessage("sauvegarger"),
+        "searchMap": MessageLookupByLibrary.simpleMessage("chercher des carte"),
         "selectAColor":
             MessageLookupByLibrary.simpleMessage("Sélectionnez une couleur"),
         "signIn": MessageLookupByLibrary.simpleMessage("connexion"),

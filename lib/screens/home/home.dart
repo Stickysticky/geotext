@@ -67,6 +67,11 @@ class Home extends ConsumerWidget {
              iconData: Icons.notifications,
              route: '/my_maps'
          ),
+         MenuCard(
+             text: capitalizeFirstLetter(S.of(context).searchMap),
+             iconData: Icons.travel_explore,
+             route: '/my_maps'
+         ),
        ],
       )
     );
