@@ -18,7 +18,7 @@ class MapViewCreatorInitPoint extends ConsumerStatefulWidget {
 
 class _MapviewCreatorInitPointState extends ConsumerState<MapViewCreatorInitPoint> {
   // Point initial de la carte : Paris
-  LatLng? _center; // Coordonnées de Paris
+  LatLng? _center;
   List<Marker> markers = [];
   final MapController _mapController = MapController(); // Ajout du MapController
 
@@ -80,76 +80,78 @@ class _MapviewCreatorInitPointState extends ConsumerState<MapViewCreatorInitPoin
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       body: Padding(
         padding: const EdgeInsets.fromLTRB(10.0, 0, 10.0, 0),
-        child: Column(
-          children: [
-            // Texte d'indication en haut de la carte
-            Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: Text(
-                S.of(context).infoMapInitPoint,
-                style: TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.pink.shade400,
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              // Texte d'indication en haut de la carte
+              Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Text(
+                  S.of(context).infoMapInitPoint,
+                  style: TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.pink.shade400,
+                  ),
                 ),
               ),
-            ),
-            // La carte OpenStreetMap
-            SizedBox(
-              height: MediaQuery.of(context).size.height * 0.70,
-              child: Stack(
-                children: [
-                  FlutterMap(
-                    mapController: _mapController,
-                    options: MapOptions(
-                      initialCenter: _center!,
-                      onTap: (tapPosition, point) {
-                        // Lorsque l'utilisateur clique sur la carte, ajoutez un marqueur
-                        setState(() {
-                          _center = point;
-                          markers = [
-                            Marker(
-                              point: point,
-                              child: Icon(
-                                Icons.location_on,
-                                color: Colors.pink.shade400,
-                                size: 40,
+              // La carte OpenStreetMap
+              SizedBox(
+                height: MediaQuery.of(context).size.height * 0.70,
+                child: Stack(
+                  children: [
+                    FlutterMap(
+                      mapController: _mapController,
+                      options: MapOptions(
+                        initialCenter: _center!,
+                        onTap: (tapPosition, point) {
+                          // Lorsque l'utilisateur clique sur la carte, ajoutez un marqueur
+                          setState(() {
+                            _center = point;
+                            markers = [
+                              Marker(
+                                point: point,
+                                child: Icon(
+                                  Icons.location_on,
+                                  color: Colors.pink.shade400,
+                                  size: 40,
+                                ),
                               ),
-                            ),
-                          ];
-                        });
-                      },
+                            ];
+                          });
+                        },
+                      ),
+                      children: [
+                        TileLayer(
+                          urlTemplate: "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
+                          subdomains: ['a', 'b', 'c'],
+                        ),
+                        MarkerLayer(
+                          markers: markers,
+                        ),
+                        Scalebar()
+                      ],
                     ),
-                    children: [
-                      TileLayer(
-                        urlTemplate: "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
-                        subdomains: ['a', 'b', 'c'],
-                      ),
-                      MarkerLayer(
-                        markers: markers,
-                      ),
-
-                    ],
-                  ),
-                  Positioned(
-                    bottom: 20, // Espace du bas
-                    right: 5,  // Espace de la droite
-                    child: ElevatedButton(
-                      onPressed: () => _recenterMap(geoMap), // Appelle la fonction de recentrage
-                      child: const Icon(Icons.my_location), // Icône de recentrage
-                      style: ElevatedButton.styleFrom(
-                        shape: CircleBorder(), // Forme ronde comme le FloatingActionButton
-                        backgroundColor: Colors.white, // Couleur d'arrière-plan (comme le backgroundColor de FloatingActionButton)
-                        foregroundColor: Colors.brown.shade400, // Couleur du premier plan (comme le foregroundColor de FloatingActionButton)
-                        padding: EdgeInsets.all(16), // Donne un padding pour augmenter la taille du bouton
+                    Positioned(
+                      bottom: 20, // Espace du bas
+                      right: 5,  // Espace de la droite
+                      child: ElevatedButton(
+                        onPressed: () => _recenterMap(geoMap), // Appelle la fonction de recentrage
+                        child: const Icon(Icons.my_location), // Icône de recentrage
+                        style: ElevatedButton.styleFrom(
+                          shape: CircleBorder(), // Forme ronde comme le FloatingActionButton
+                          backgroundColor: Colors.white, // Couleur d'arrière-plan (comme le backgroundColor de FloatingActionButton)
+                          foregroundColor: Colors.brown.shade400, // Couleur du premier plan (comme le foregroundColor de FloatingActionButton)
+                          padding: EdgeInsets.all(16), // Donne un padding pour augmenter la taille du bouton
+                        ),
                       ),
                     ),
-                  ),
 
-                ]
+                  ]
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

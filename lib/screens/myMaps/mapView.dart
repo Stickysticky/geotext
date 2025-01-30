@@ -137,6 +137,7 @@ class _MapViewState extends ConsumerState<MapView> {
           MarkerLayer(
             markers: markers,
           ),
+          Scalebar(),
           if (_selectedGeoMapPoint != null) // Affiche le cercle uniquement si un point est sélectionné
             CircleLayer(
               circles: [

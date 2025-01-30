@@ -181,6 +181,7 @@ class _MapviewCreatorPointCreationState
                             ..._generateMarkersFromGeoMapPoints(geoMap),
                           ],
                         ),
+                        Scalebar(),
                         PopupMarkerLayer(
                             options: PopupMarkerLayerOptions(
                                 markers: _generateMarkersFromGeoMapPoints(geoMap),
@@ -226,7 +227,7 @@ class _MapviewCreatorPointCreationState
                         ),
                         if (allPointMapVisibility)
                           Positioned(
-                            bottom: 20, // Espace du bas
+                            bottom: geoMap.geoMapPoints.isNotEmpty ? 20 : 45, // Espace du bas
                             right: 5, // Espace de la droite
                             child: ElevatedButton(
                               onPressed: () => _recenterMap(geoMap), // Appelle la fonction de recentrage
